@@ -390,21 +390,28 @@
             </span>
           </div>
           <p class="entry-summary">
-            Suspension geometry design and drivetrain design-for-manufacture on the NTUT
-            FSAE team.
+            Suspension geometry design and drivetrain CAD on Taipei Tech Racing.
           </p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
+            <div class="metrics">
+              <div class="metric"><div class="num">2nd</div><div class="lbl">Formula Student Taiwan 2023</div></div>
+            </div>
             <figure class="entry-img">
-              <img src="assets/fsae.jpg" alt="NTUT FSAE race car" onerror="this.parentElement.style.display='none'">
-              <figcaption>NTUT Formula SAE car</figcaption>
+              <img src="assets/fsae-car.png" alt="NTUT FSAE race car TTR7" onerror="this.parentElement.style.display='none'">
+              <figcaption>NTUT Taipei Tech Racing — TTR7</figcaption>
             </figure>
-            <p>
-              One year on <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a>, the NTUT FSAE team: suspension geometry design and drivetrain
-              design-for-manufacture — taking components from CAD through machining to a
-              running race car.
-            </p>
+            <ul>
+              <li><strong>Drivetrain design:</strong> designed entire CAD model, FSAE compliance verification, structural strength simulation.</li>
+              <li><strong>Power transmission:</strong> chain/belt packaging and layout optimization.</li>
+              <li><strong>Impact:</strong> improved drivetrain stiffness and reliability; contributed to 2nd place.</li>
+            </ul>
+            <figure class="entry-img">
+              <img src="assets/fsae-drivetrain.png" alt="FSAE Drivetrain design" onerror="this.parentElement.style.display='none'">
+              <figcaption>Drivetrain CAD and packaging</figcaption>
+            </figure>
+            <p>One year on <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a>. <em>Chassis details confidential.</em></p>
           </div></div>
         </div>
       </article>
@@ -412,25 +419,48 @@
       <article class="entry">
         <button class="entry-toggle" aria-expanded="false">
           <div class="entry-head">
-            <h3>FEA Structural &amp; Fatigue Analysis</h3>
-            <span class="meta">Undergraduate thesis
+            <h3>Scooter Frame Fatigue Analysis &amp; Optimization</h3>
+            <span class="meta">Capstone project / FEA
               <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </div>
           <p class="entry-summary">
-            Finite-element analysis of structural strength and fatigue life.
+            End-to-end fatigue workflow: experiment → signal processing → CAE → optimization with +339% improvement.
           </p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
             <figure class="entry-img">
-              <img src="assets/fea.jpg" alt="FEA stress analysis visualization" onerror="this.parentElement.style.display='none'">
-              <figcaption>Stress distribution from FEA</figcaption>
+              <img src="assets/scooter-overview.png" alt="Capstone project overview" onerror="this.parentElement.style.display='none'">
+              <figcaption>Project overview — experiment to optimization</figcaption>
             </figure>
-            <p>
-              Undergraduate thesis applying finite-element analysis to structural strength and
-              fatigue life — the simulation discipline behind safe mechanical design.
-            </p>
+            <div class="metrics">
+              <div class="metric"><div class="num">+339%</div><div class="lbl">Fatigue improvement</div></div>
+              <div class="metric"><div class="num">3.1k → 13.6k</div><div class="lbl">Cycles to failure</div></div>
+            </div>
+            <ul>
+              <li><strong>CAD &amp; meshing:</strong> full frame geometry in SolidWorks; mid-surface extraction, weld modeling (RBAR).</li>
+              <li><strong>Experiment:</strong> 3-accelerometer rig, time-domain acceleration under bump loading.</li>
+              <li><strong>Data pipeline:</strong> derived CG acceleration transformation; converted data to PSD for HyperWorks.</li>
+              <li><strong>Simulation:</strong> random-vibration FEA under realistic road-condition PSD loading.</li>
+              <li><strong>Optimization:</strong> thickness increase (2.4 → 2.7 mm) tripled fatigue life to 116,805 km.</li>
+            </ul>
+            <figure class="entry-img">
+              <img src="assets/scooter-flowchart.png" alt="Research workflow" onerror="this.parentElement.style.display='none'">
+              <figcaption>Workflow diagram</figcaption>
+            </figure>
+            <figure class="entry-img">
+              <img src="assets/scooter-cad.png" alt="Full CAD model" onerror="this.parentElement.style.display='none'">
+              <figcaption>Full CAD model (100% self-built)</figcaption>
+            </figure>
+            <figure class="entry-img">
+              <img src="assets/scooter-stress.png" alt="FEA stress analysis" onerror="this.parentElement.style.display='none'">
+              <figcaption>Stress analysis — max RMS 2.140 MPa</figcaption>
+            </figure>
+            <figure class="entry-img">
+              <img src="assets/scooter-optimization.png" alt="Optimization results" onerror="this.parentElement.style.display='none'">
+              <figcaption>Optimization — thickness change doubles capacity</figcaption>
+            </figure>
           </div></div>
         </div>
       </article>
@@ -469,19 +499,25 @@
       <article class="xentry">
         <div class="entry-head">
           <h3>Engineering Intern — Foxconn, Commercial EV Division</h3>
-          <span class="meta">Internship</span>
+          <span class="meta">Jul–Aug 2023</span>
         </div>
-        <p>Worked inside a commercial electric-vehicle program at one of the world's
-        largest manufacturers — exposure to EV development at production scale.</p>
+        <figure class="entry-img" style="max-width:400px;margin:12px 0">
+          <img src="assets/foxconn-ev.png" alt="Foxconn CCEV full-electric van" onerror="this.parentElement.style.display='none'" style="max-width:100%">
+          <figcaption style="font-size:.82rem;color:var(--text-soft);margin-top:6px">Full-electric commercial van (Model N)</figcaption>
+        </figure>
+        <p><strong>Responsibilities:</strong> cockpit ergonomics design (2 accepted proposals), chassis structural layout, cross-functional collaboration with EE/ME teams. Model N unveiled at Hon Hai Tech Day 2023 — exposure to EV development at production scale.</p>
       </article>
 
       <article class="xentry">
         <div class="entry-head">
           <h3>Product Development Intern — iPE (Wheels)</h3>
-          <span class="meta">Internship</span>
+          <span class="meta">Jul–Aug 2024</span>
         </div>
-        <p>Wheel product development and production-line optimization; contributed to a
-        25% production capacity improvement.</p>
+        <figure class="entry-img" style="max-width:400px;margin:12px 0">
+          <img src="assets/ipe-wheels.png" alt="Magnesium alloy wheel design" onerror="this.parentElement.style.display='none'" style="max-width:100%">
+          <figcaption style="font-size:.82rem;color:var(--text-soft);margin-top:6px">Magnesium alloy wheel R&amp;D</figcaption>
+        </figure>
+        <p><strong>Contributions:</strong> magnesium alloy wheel R&amp;D, production-line workflow optimization (+16% efficiency), manufacturing documentation design, marketing video campaigns (15–23% traffic increase). Learned full product lifecycle: design → testing → manufacturing → marketing.</p>
       </article>
 
       <article class="xentry">
