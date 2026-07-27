@@ -87,29 +87,83 @@
     </div>
 
     <figure>
-      <img src="../assets/aicup.jpg" alt="Cardiac CT segmentation results"
+      <img src="../assets/aicup-hero.png" alt="UNet3D myocardium segmentation: input CT slice next to the predicted mask"
            onerror="this.parentElement.style.display='none'">
-      <figcaption>Segmentation output on cardiac CT</figcaption>
+      <figcaption>Real inference, not a report screenshot: input CT slice (left) vs. this UNet3D checkpoint's prediction (right).</figcaption>
     </figure>
 
     <h2>Overview</h2>
     <p>
-      Coming from a vehicle-engineering background, AI CUP 2025 was a chance to apply
-      deep learning to a domain outside vehicles — one that turned out to share real
-      structure with autonomous-vehicle perception. Both segmentation and detection here
-      work on volumetric (3D) data, and both need to find small, low-contrast targets
-      reliably: the same underlying problem as lidar/voxel processing and small-object
-      detection in ADAS.
+      This was my first machine learning project and my first real exposure to computer
+      vision — an end-to-end pipeline from raw CT volumes to a trained model to a
+      leaderboard submission, done solo (data preprocessing, manual annotation in 3D
+      Slicer and LabelMe, training, tuning, and inference all mine). Coming from a
+      vehicle-engineering background, it was also a chance to apply deep learning to a
+      domain outside vehicles — one that turned out to share real structure with
+      autonomous-vehicle perception. Both tasks here work on volumetric (3D) data and
+      need to find small, low-contrast targets reliably: the same underlying problem as
+      lidar/voxel processing and small-object detection in ADAS. This project is what
+      first pulled me toward autonomous driving as a direction.
     </p>
     <p>
-      The pipeline splits into two models: a UNet3D network that segments the whole
-      heart from cardiac CT volumes, and a YOLOv12 detector tuned to localize the aortic
-      valve — a small, low-contrast target that's easy to miss.
+      The pipeline splits into two independent tracks, both built on the same cardiac
+      CT patient cohort (50 labeled training cases, 50 held-out test cases): a UNet3D
+      network that segments the whole heart from cardiac CT volumes, and a YOLOv12
+      detector tuned to localize the aortic valve — a small, low-contrast target that's
+      easy to miss.
     </p>
 
+    <h2>Track I — Myocardial Segmentation</h2>
+    <p>
+      A MONAI <code>UNet3D</code> (channels 64→128→256→256, stride-2 downsampling)
+      trained with <code>DiceCELoss</code> + AdamW. Preprocessing clips intensities to
+      [-42, 423] HU, resamples to 0.7×0.7×1.0&nbsp;mm spacing, and extracts
+      128×128×128 ROI patches. Reached <strong>0.7439 Dice</strong> on the public
+      leaderboard.
+    </p>
+    <figure>
+      <img src="../assets/aicup-ct-slice.png" alt="Raw axial CT slice showing a four-chamber cardiac cross-section">
+      <figcaption>The raw input: a four-chamber cardiac CT cross-section, before any model sees it.</figcaption>
+    </figure>
+    <ul>
+      <li>Next up: a hybrid loss (Dice + Focal + a boundary term) to sharpen edges, model ensembling, semi-supervised/transfer learning to use unlabeled scans, and morphological post-processing to clean up spurious small regions.</li>
+    </ul>
+
+    <h2>Track II — Aortic Valve Detection</h2>
+    <p>
+      YOLOv12 (Ultralytics), fine-tuned from <code>yolo12n.pt</code> on 2,168 labeled
+      training slices / 619 validation slices, trained in stages
+      (<code>resume=True</code>) around Colab's daily compute limits. Reached
+      <strong>0.9396 Dice</strong> on the public leaderboard with inference at
+      <code>conf=0.05, iou=0.65</code>.
+    </p>
+    <figure>
+      <img src="../assets/aicup-detect-01.jpg" alt="YOLOv12 localizing the aortic valve on a test CT slice at 0.92 confidence">
+      <figcaption>The model localizing the aortic valve on a held-out test slice at 0.92 confidence.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/aicup-detect-02.png" alt="Side-by-side raw CT input and YOLOv12 detection output">
+      <figcaption>Same pipeline, same weights that were submitted: raw input (left) → detection output (right).</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/aicup-detect-03.png" alt="Three detections spanning low, medium, and high confidence across different patients">
+      <figcaption>Low/medium/high-confidence cases across three held-out patients. The middle case is a real limitation, not a cherry-pick: the model fires two overlapping boxes on the same structure (0.65 and 0.08 confidence) — a case for stricter NMS/IoU filtering.</figcaption>
+    </figure>
+    <p>What I actually tried during the competition, not a hypothetical list:</p>
+    <ul>
+      <li>Compared <code>batch=8</code> and <code>batch=16</code> training runs at 50 epochs before settling on <code>batch=4</code> as the best-performing configuration.</li>
+      <li>Tried swapping the <code>yolo12n.pt</code> base checkpoint for an earlier fine-tuned <code>best.pt</code> and continuing training from there.</li>
+      <li>Tuned inference-time <code>conf</code>/<code>iou</code> thresholds repeatedly against a hard constraint — only 3 submissions/day — so each iteration had to be planned carefully.</li>
+    </ul>
+    <ul>
+      <li>Next up: higher input resolution, a finer conf/IoU sweep, and a larger YOLO backbone.</li>
+    </ul>
+
     <p class="note">
-      Full write-up — data pipeline, training setup, and what made the aortic-valve
-      detection result work — coming soon.
+      Every result image above comes from reloading the actual trained checkpoints
+      (<code>best.pt</code> for detection, the UNet3D checkpoint for segmentation) and
+      running real inference on held-out test CT scans — not screenshots from the
+      competition report.
     </p>
 
     <div class="links">
