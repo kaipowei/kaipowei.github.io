@@ -57,6 +57,7 @@
   .metrics{display:flex;gap:34px;flex-wrap:wrap;margin:18px 0 4px}
   .metric .num{font-size:1.6rem;font-weight:700;letter-spacing:-.01em}
   .metric .lbl{font-size:.78rem;color:var(--text-soft);letter-spacing:.04em;text-transform:uppercase}
+  .note{color:var(--text-soft);font-style:italic;font-size:.95rem;margin-top:28px}
   .links{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);display:flex;gap:20px;font-size:.95rem}
   footer{border-top:1px solid var(--line);padding:22px 0;font-size:.85rem;color:var(--text-soft)}
   footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
@@ -93,50 +94,26 @@
 
     <h2>Overview</h2>
     <p>
-      這裡寫背景:AI CUP 是什麼比賽、題目要求什麼、為什麼一個車輛工程背景的人
-      要挑戰醫學影像(這其實是好故事——展現你跨域學習 deep learning 的能力,
-      而且 3D 影像處理跟自駕的 lidar/體素處理概念相通)。建議 2 段。
-      (把中文提示替換成你的英文內容)
+      Coming from a vehicle-engineering background, AI CUP 2025 was a chance to apply
+      deep learning to a domain outside vehicles — one that turned out to share real
+      structure with autonomous-vehicle perception. Both segmentation and detection here
+      work on volumetric (3D) data, and both need to find small, low-contrast targets
+      reliably: the same underlying problem as lidar/voxel processing and small-object
+      detection in ADAS.
+    </p>
+    <p>
+      The pipeline splits into two models: a UNet3D network that segments the whole
+      heart from cardiac CT volumes, and a YOLOv12 detector tuned to localize the aortic
+      valve — a small, low-contrast target that's easy to miss.
     </p>
 
-    <h2>Segmentation — UNet3D</h2>
-    <p>這裡寫分割任務的技術細節,例如:</p>
-    <ul>
-      <li><strong>Data:</strong> 資料集規模、CT 體積的維度、標註格式</li>
-      <li><strong>Preprocessing:</strong> resampling、intensity normalization、patch 切法</li>
-      <li><strong>Augmentation:</strong> 用了哪些增強方法、為什麼</li>
-      <li><strong>Training:</strong> loss function(Dice loss? 混合?)、optimizer、訓練資源與時間</li>
-      <li><strong>Post-processing:</strong> 例如 connected-component filtering</li>
-    </ul>
-
-    <h2>Detection — YOLOv12</h2>
-    <p>
-      這裡寫偵測任務:主動脈瓣是小目標、低對比,你怎麼調整模型或訓練策略來處理
-      (anchor 設定? 輸入解析度? 資料切片策略?)。Dice 0.940 是很強的數字,
-      值得解釋你做對了什麼。
-    </p>
-
-    <figure>
-      <img src="../assets/aicup-detection.jpg" alt="Aortic valve detection results"
-           onerror="this.parentElement.style.display='none'">
-      <figcaption>YOLOv12 aortic-valve detection(想放更多圖就複製這個 figure 區塊)</figcaption>
-    </figure>
-
-    <h2>Challenges &amp; lessons</h2>
-    <p>
-      這裡寫遇到的困難跟解法:例如訓練不穩定、class imbalance、GPU 記憶體限制
-      怎麼處理。有一兩個「卡關 → 分析 → 解決」的故事,比單純列成果更能展現
-      工程能力。
-    </p>
-
-    <h2>Why this matters for autonomy</h2>
-    <p>
-      一小段收尾,把這個專案連回你的主軸:volumetric data、小目標偵測、
-      不完美標註下的訓練——這些都是 AV perception 會遇到的同型問題。
+    <p class="note">
+      Full write-up — data pipeline, training setup, and what made the aortic-valve
+      detection result work — coming soon.
     </p>
 
     <div class="links">
-      <a href="https://github.com/YOUR_GITHUB">View code on GitHub</a>
+      <a href="https://github.com/kaipowei">View code on GitHub</a>
     </div>
   </article>
 </div>
