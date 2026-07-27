@@ -384,34 +384,47 @@
       <article class="entry">
         <button class="entry-toggle" aria-expanded="false">
           <div class="entry-head">
-            <h3>FSAE Suspension &amp; Drivetrain</h3>
-            <span class="meta">NTUT Formula SAE
+            <h3>FSAE Suspension &amp; Drivetrain Design</h3>
+            <span class="meta">Taipei Tech Racing / Formula SAE
               <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </div>
           <p class="entry-summary">
-            Suspension geometry design and drivetrain CAD on Taipei Tech Racing.
+            Designed drivetrain CAD &amp; suspension geometry for TTR7 race car — 2nd place, Formula Student Taiwan 2023.
           </p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
             <div class="metrics">
               <div class="metric"><div class="num">2nd</div><div class="lbl">Formula Student Taiwan 2023</div></div>
+              <div class="metric"><div class="num">TTR7</div><div class="lbl">Vehicle designation</div></div>
             </div>
+
             <figure class="entry-img">
-              <img src="assets/fsae-car.png" alt="NTUT FSAE race car TTR7" onerror="this.parentElement.style.display='none'">
-              <figcaption>NTUT Taipei Tech Racing — TTR7</figcaption>
+              <img src="assets/fsae-ttr-full.png" alt="TTR7 Formula SAE race car" onerror="this.parentElement.style.display='none'">
+              <figcaption>TTR7 — Taipei Tech Racing's Formula Student car</figcaption>
             </figure>
+
+            <p><strong>My responsibilities:</strong></p>
             <ul>
-              <li><strong>Drivetrain design:</strong> designed entire CAD model, FSAE compliance verification, structural strength simulation.</li>
-              <li><strong>Power transmission:</strong> chain/belt packaging and layout optimization.</li>
-              <li><strong>Impact:</strong> improved drivetrain stiffness and reliability; contributed to 2nd place.</li>
+              <li><strong>Drivetrain CAD:</strong> designed complete drivetrain assembly from motor to wheel sprockets</li>
+              <li><strong>Power transmission:</strong> optimized chain/belt packaging, spacing, and load paths</li>
+              <li><strong>Compliance:</strong> verified all components against FSAE competition rules</li>
+              <li><strong>Simulation:</strong> FEA verification of structural strength and stiffness</li>
             </ul>
+
             <figure class="entry-img">
-              <img src="assets/fsae-drivetrain.png" alt="FSAE Drivetrain design" onerror="this.parentElement.style.display='none'">
-              <figcaption>Drivetrain CAD and packaging</figcaption>
+              <img src="assets/fsae-drivetrain-new.png" alt="Drivetrain CAD design showing gears and transmission" onerror="this.parentElement.style.display='none'">
+              <figcaption>Drivetrain assembly — gearbox, sprockets, and power-transmission layout</figcaption>
             </figure>
-            <p>One year on <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a>. <em>Chassis details confidential.</em></p>
+
+            <figure class="entry-img">
+              <img src="assets/fsae-ttr-detail.jpg" alt="Close-up of TTR7 drivetrain and chassis in pit area" onerror="this.parentElement.style.display='none'">
+              <figcaption>On-track detail — drivetrain mounted and tested under competition conditions</figcaption>
+            </figure>
+
+            <p><strong>Team context:</strong> One year on <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a>, the NTUT Formula Student team. Took components from CAD through machining to a running race car. Contributed to 2nd place finish at national competition.</p>
+            <p style="color:var(--text-soft);font-size:.95rem"><em>Chassis design details remain confidential under team IP agreements.</em></p>
           </div></div>
         </div>
       </article>
@@ -425,42 +438,48 @@
             </span>
           </div>
           <p class="entry-summary">
-            End-to-end fatigue workflow: experiment → signal processing → CAE → optimization with +339% improvement.
+            Complete fatigue workflow: experiment → CAD → FEA → optimization achieving +339% life improvement.
           </p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
-            <figure class="entry-img">
-              <img src="assets/scooter-overview.png" alt="Capstone project overview" onerror="this.parentElement.style.display='none'">
-              <figcaption>Project overview — experiment to optimization</figcaption>
-            </figure>
             <div class="metrics">
-              <div class="metric"><div class="num">+339%</div><div class="lbl">Fatigue improvement</div></div>
-              <div class="metric"><div class="num">3.1k → 13.6k</div><div class="lbl">Cycles to failure</div></div>
+              <div class="metric"><div class="num">+339%</div><div class="lbl">Fatigue life gain</div></div>
+              <div class="metric"><div class="num">13.6k cycles</div><div class="lbl">vs 3.1k original</div></div>
+              <div class="metric"><div class="num">116.8 km</div><div class="lbl">Equivalent mileage</div></div>
             </div>
+            <p><strong>Problem:</strong> Scooter frame fails under real-world bump loading. Need validated fatigue analysis and design solution.</p>
+
+            <figure class="entry-img">
+              <img src="assets/scooter-cad-new.png" alt="SolidWorks CAD scooter frame model" onerror="this.parentElement.style.display='none'">
+              <figcaption>Full CAD model built from motorcycle measurements (100% self-created)</figcaption>
+            </figure>
+
+            <p><strong>Methodology:</strong></p>
             <ul>
-              <li><strong>CAD &amp; meshing:</strong> full frame geometry in SolidWorks; mid-surface extraction, weld modeling (RBAR).</li>
-              <li><strong>Experiment:</strong> 3-accelerometer rig, time-domain acceleration under bump loading.</li>
-              <li><strong>Data pipeline:</strong> derived CG acceleration transformation; converted data to PSD for HyperWorks.</li>
-              <li><strong>Simulation:</strong> random-vibration FEA under realistic road-condition PSD loading.</li>
-              <li><strong>Optimization:</strong> thickness increase (2.4 → 2.7 mm) tripled fatigue life to 116,805 km.</li>
+              <li>Designed complete frame geometry in SolidWorks from real motorcycle specs</li>
+              <li>Set up experiment with 3 accelerometers (front, left-rear, right-rear)</li>
+              <li>Derived center-of-gravity acceleration transformation formula</li>
+              <li>Converted time-domain vibration data to PSD for HyperWorks</li>
             </ul>
+
             <figure class="entry-img">
-              <img src="assets/scooter-flowchart.png" alt="Research workflow" onerror="this.parentElement.style.display='none'">
-              <figcaption>Workflow diagram</figcaption>
+              <img src="assets/scooter-stress-original.png" alt="FEA stress analysis showing problem areas (red circles)" onerror="this.parentElement.style.display='none'">
+              <figcaption>Original design stress distribution — red circles mark critical regions, max RMS 2.14 MPa</figcaption>
             </figure>
+
             <figure class="entry-img">
-              <img src="assets/scooter-cad.png" alt="Full CAD model" onerror="this.parentElement.style.display='none'">
-              <figcaption>Full CAD model (100% self-built)</figcaption>
+              <img src="assets/scooter-stress-optimized.png" alt="Optimized design with improved stress distribution" onerror="this.parentElement.style.display='none'">
+              <figcaption>After optimization — thickness 2.4→2.7mm doubles structural capacity</figcaption>
             </figure>
+
             <figure class="entry-img">
-              <img src="assets/scooter-stress.png" alt="FEA stress analysis" onerror="this.parentElement.style.display='none'">
-              <figcaption>Stress analysis — max RMS 2.140 MPa</figcaption>
+              <img src="assets/scooter-fea-analysis.png" alt="Detailed FEA contour plot" onerror="this.parentElement.style.display='none'">
+              <figcaption>Life prediction contour — identifies weak points for design iteration</figcaption>
             </figure>
-            <figure class="entry-img">
-              <img src="assets/scooter-optimization.png" alt="Optimization results" onerror="this.parentElement.style.display='none'">
-              <figcaption>Optimization — thickness change doubles capacity</figcaption>
-            </figure>
+
+            <p><strong>Solution &amp; Results:</strong> Simple 0.3mm thickness increase (2% change) tripled fatigue life from 26,600 km to 116,805 km — a realistic, manufacturable improvement validated by rigorous simulation.</p>
+            <p style="color:var(--text-soft);font-size:.95rem"><em>Key takeaway: Small design tweaks grounded in real data and FEA beats guessing.</em></p>
           </div></div>
         </div>
       </article>
@@ -501,11 +520,18 @@
           <h3>Engineering Intern — Foxconn, Commercial EV Division</h3>
           <span class="meta">Jul–Aug 2023</span>
         </div>
-        <figure class="entry-img" style="max-width:400px;margin:12px 0">
-          <img src="assets/foxconn-ev.png" alt="Foxconn CCEV full-electric van" onerror="this.parentElement.style.display='none'" style="max-width:100%">
-          <figcaption style="font-size:.82rem;color:var(--text-soft);margin-top:6px">Full-electric commercial van (Model N)</figcaption>
+        <p><strong>Project:</strong> Full-electric commercial van (Model N) — cockpit design, ergonomics, and chassis layout for production-scale EV.</p>
+        <figure class="entry-img" style="max-width:500px;margin:12px 0">
+          <img src="assets/foxconn-model-n.jpg" alt="Foxconn Model N electric delivery van" onerror="this.parentElement.style.display='none'" style="max-width:100%">
+          <figcaption style="font-size:.82rem;color:var(--text-soft);margin-top:6px">Model N — Foxconn's full-electric commercial vehicle unveiled at HHTD 2023</figcaption>
         </figure>
-        <p><strong>Responsibilities:</strong> cockpit ergonomics design (2 accepted proposals), chassis structural layout, cross-functional collaboration with EE/ME teams. Model N unveiled at Hon Hai Tech Day 2023 — exposure to EV development at production scale.</p>
+        <p><strong>Contributions:</strong></p>
+        <ul style="margin-left:22px">
+          <li>Cockpit ergonomics design — submitted 2 proposals, both approved by management</li>
+          <li>Chassis structural layout — collaborated with structural &amp; EE teams on mounting points and routing</li>
+          <li>Cross-functional coordination — worked alongside mechanical, electrical, and human-factors engineers</li>
+        </ul>
+        <p style="color:var(--text-soft);font-size:.95rem">Exposed me to vehicle development at production scale. Model N made its public debut at Hon Hai Tech Day 2023 (<a href="https://www.youtube.com/watch?v=zvPJuWKjSls" target="_blank" rel="noopener">video</a>).</p>
       </article>
 
       <article class="xentry">
@@ -513,11 +539,19 @@
           <h3>Product Development Intern — iPE (Wheels)</h3>
           <span class="meta">Jul–Aug 2024</span>
         </div>
-        <figure class="entry-img" style="max-width:400px;margin:12px 0">
-          <img src="assets/ipe-wheels.png" alt="Magnesium alloy wheel design" onerror="this.parentElement.style.display='none'" style="max-width:100%">
-          <figcaption style="font-size:.82rem;color:var(--text-soft);margin-top:6px">Magnesium alloy wheel R&amp;D</figcaption>
+        <p><strong>Focus:</strong> Magnesium alloy wheel R&amp;D, production optimization, and marketing for high-performance vehicles (Porsche GT3RS).</p>
+        <figure class="entry-img" style="max-width:500px;margin:12px 0">
+          <img src="assets/ipe-wheels-new.png" alt="Magnesium alloy wheel designs by iPE" onerror="this.parentElement.style.display='none'" style="max-width:100%">
+          <figcaption style="font-size:.82rem;color:var(--text-soft);margin-top:6px">Magnesium alloy wheel portfolio — lightweight, high-strength designs for motorsport</figcaption>
         </figure>
-        <p><strong>Contributions:</strong> magnesium alloy wheel R&amp;D, production-line workflow optimization (+16% efficiency), manufacturing documentation design, marketing video campaigns (15–23% traffic increase). Learned full product lifecycle: design → testing → manufacturing → marketing.</p>
+        <p><strong>Key achievements:</strong></p>
+        <ul style="margin-left:22px">
+          <li>Production-line workflow optimization — improved efficiency by <strong>16%</strong></li>
+          <li>Manufacturing documentation — designed structured specs and procedures for repeatability</li>
+          <li>Marketing campaigns — planned and directed product videos, achieved <strong>15–23% traffic increase</strong></li>
+          <li>Product lifecycle exposure — design → simulation → testing → manufacturing → market</li>
+        </ul>
+        <p style="color:var(--text-soft);font-size:.95rem">Learned the full product journey from concept through customer hands.</p>
       </article>
 
       <article class="xentry">
