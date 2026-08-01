@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friction-Aware Motion Planning for Autonomous Vehicles — Kaipo Wei</title>
+<meta name="description" content="A motion planning and tracking stack that plans in a kinematic model, exposes the tire-friction mismatch with a dynamic model, fixes it with a friction-circle-constrained speed profile, then estimates road friction live with an EKF. Built by Kaipo Wei, runs over ROS2/RViz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1217;
+    --bg-soft:#151B22;
+    --text:#E9EDF2;
+    --text-soft:#9AA6B4;
+    --line:#262E38;
+    --link:#58A6FF;
+    --sans:'Inter',system-ui,sans-serif;
+    --maxw:760px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--sans);font-size:16.5px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  a:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(14,18,23,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .site-title{font-weight:600;font-size:16px;color:var(--text)}
+  .site-title:hover{text-decoration:none;color:var(--link)}
+  .back{font-size:14.5px}
+
+  article{padding:52px 0 80px}
+  .meta{font-size:.85rem;color:var(--text-soft);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:2rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:14px}
+  .lead{color:var(--text-soft);font-size:1.05rem;margin-bottom:8px}
+  h2{font-size:1.3rem;font-weight:700;letter-spacing:-.01em;margin:40px 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  h3{font-size:1.05rem;font-weight:600;margin:22px 0 6px}
+  p{margin:12px 0}
+  ul,ol{margin:10px 0 10px 22px;color:var(--text-soft)}
+  li{margin:5px 0}
+  li strong{color:var(--text);font-weight:600}
+  code{background:var(--bg-soft);border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:.9em}
+  figure{margin:22px 0}
+  figure img, figure video{
+    width:100%;display:block;border:1px solid var(--line);
+    border-radius:4px;background:var(--bg-soft);
+  }
+  figcaption{font-size:.82rem;color:var(--text-soft);margin-top:7px}
+  .metrics{display:flex;gap:34px;flex-wrap:wrap;margin:18px 0 4px}
+  .metric .num{font-size:1.6rem;font-weight:700;letter-spacing:-.01em}
+  .metric .lbl{font-size:.78rem;color:var(--text-soft);letter-spacing:.04em;text-transform:uppercase}
+  .demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+  .demo-grid figure{margin:0}
+  .demo-grid .tag{font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+  .demo-grid .tag.bad{color:#F0806A}
+  .demo-grid .tag.good{color:#5FD08A}
+  @media(max-width:600px){.demo-grid{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.95rem}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--text-soft);font-weight:600;font-size:.82rem;letter-spacing:.03em;text-transform:uppercase}
+  .note{color:var(--text-soft);font-style:italic;font-size:.95rem;margin-top:28px}
+  .links{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);display:flex;gap:20px;font-size:.95rem}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-size:.85rem;color:var(--text-soft)}
+  footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="site-title" href="../index.html">Kaipo Wei</a>
+    <a class="back" href="../index.html#projects">← Back to projects</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <article>
+    <div class="meta">Project · Motion planning &amp; controls · 2026</div>
+    <h1>Friction-Aware Motion Planning for Autonomous Vehicles</h1>
+    <p class="lead">
+      A planning-and-tracking stack that plans in a kinematic model (like most
+      planning stacks do), deliberately exposes the tracking failure that this
+      assumption causes at speed or on low-friction road, fixes it by
+      constraining the planned speed to the vehicle's tire-friction circle, then
+      goes one step further and estimates that friction live while driving.
+    </p>
+
+    <div class="metrics">
+      <div class="metric"><div class="num">36/36</div><div class="lbl">Friction-aware success, vs 22/36 naive</div></div>
+      <div class="metric"><div class="num">0.34m</div><div class="lbl">Worst-case RMSE, vs 20.37m naive</div></div>
+      <div class="metric"><div class="num">0.004m</div><div class="lbl">Stage 2 RMSE std across 36 runs</div></div>
+    </div>
+
+    <div class="demo-grid">
+      <figure>
+        <div class="tag bad">Naive — curvature-blind</div>
+        <video src="../assets/fap-naive-pure-pursuit.mp4" autoplay loop muted playsinline></video>
+      </figure>
+      <figure>
+        <div class="tag good">Friction-aware — fixed</div>
+        <video src="../assets/fap-friction-aware-pure-pursuit.mp4" autoplay loop muted playsinline></video>
+      </figure>
+    </div>
+    <p class="soft" style="color:var(--text-soft);font-size:.9rem;margin-top:-6px">
+      Same path, same vehicle, same hardest case in the test sweep (2.0x nominal speed,
+      icy road, mu=0.2, Pure Pursuit controller).
+    </p>
+
+    <h2>Why this project</h2>
+    <p>
+      Most motion-planning tutorials use a kinematic bicycle model: give it a steering
+      angle and a speed, and it assumes the car follows the path exactly. That's fine
+      at low speed on dry pavement. It breaks once speed goes up or the road gets
+      slippery, because the tires can't actually generate the lateral force the path
+      is asking for — and a kinematic model has no way to know that in advance. This
+      is the gap between how most planning stacks reason and how a real vehicle
+      actually behaves, and it's exactly where my vehicle-dynamics background (FSAE
+      suspension, CarSim/BikeSim, tire-limited handling) turns into something directly
+      useful in software.
+    </p>
+    <p>
+      I built a normal plan-and-track pipeline first, showed where the kinematic
+      assumption breaks, then fixed it by limiting the planned speed to what the
+      tire's friction circle can actually deliver. After that I went one step
+      further: instead of assuming road friction is known ahead of time, I added an
+      Extended Kalman Filter that estimates it live while the car is driving, on a
+      road that changes surface mid-corner.
+    </p>
+
+    <h2>Stage 1 — plan and fix, with known friction</h2>
+    <p>
+      <strong>Planning:</strong> Hybrid-A* over kinematically-feasible motion
+      primitives produces the geometric path through an ISO 3888-2-style
+      double-lane-change corridor.
+      <strong>Speed profile — the core comparison:</strong> two strategies over the
+      same path — a curvature-blind trapezoidal ramp (naive, a deliberate strawman)
+      vs. <code>v_max(s) = sqrt(mu·g·R(s))</code> from path curvature, forward/backward-
+      integrated under accel and brake limits (friction-aware).
+      <strong>Ground truth:</strong> a dynamic bicycle model with a linear tire model,
+      saturated at a per-axle friction-circle bound, is what the simulator actually
+      steps — the planner and every controller only ever reason in the simpler
+      kinematic picture, so any gap between the two shows up as real tracking error,
+      not a self-consistent fiction.
+      <strong>Controllers:</strong> Pure Pursuit, Stanley, and a linear MPC, so the
+      result isn't an artifact of one control law.
+    </p>
+    <figure>
+      <img src="../assets/fap-failure-boundary-map.png" alt="Failure boundary map: naive planner fails at high speed and low friction; friction-aware doesn't fail anywhere in the grid">
+      <figcaption>Full speed × friction sweep. Naive fails in a clean staircase boundary (low friction, higher speed); friction-aware doesn't fail anywhere in the grid.</figcaption>
+    </figure>
+    <p>
+      Across a 72-run sweep ({naive, friction-aware} × {Pure Pursuit, Stanley, MPC} ×
+      4 speeds × 3 friction levels): naive succeeds 22/36, up to 20.37m RMSE when it
+      fails; friction-aware succeeds 36/36, staying in a tight 0.13–0.34m RMSE band.
+      The same behavior reproduces live over ROS2 and RViz, not just offline.
+    </p>
+
+    <h2>Stage 2 — estimating friction live</h2>
+    <p>
+      Stage 1 still assumes something a real vehicle doesn't get for free: that road
+      friction is known in advance. Stage 2 drops that assumption. A simulated noisy
+      IMU (lateral acceleration, yaw rate) feeds an Extended Kalman Filter that
+      estimates road friction and vehicle sideslip live; a curvature-gated,
+      window-smoothed trigger replans the remaining speed profile when the estimate
+      drifts from the plan; and Pure Pursuit/Stanley get a sideslip-compensated
+      steering term. Tested on a scenario where the road itself turns to ice
+      mid-corner.
+    </p>
+    <figure>
+      <img src="../assets/fap-stage2-experiment-matrix.png" alt="Stage 2 experiment matrix: RMSE and its variation across a 36-run sweep of speeds and icy-patch severities">
+      <figcaption>36-run sweep (4 speeds × 3 icy-patch severities × {naive, Stage 1, Stage 2}). Stage 2's tracking error barely moves across the whole grid.</figcaption>
+    </figure>
+    <table>
+      <tr><th></th><th>Mean RMSE</th><th>Std across 12 conditions</th></tr>
+      <tr><td>Naive</td><td>0.44 m</td><td>0.37 m</td></tr>
+      <tr><td>Stage 1 (fixed mu, wrong on ice)</td><td>0.27 m</td><td>0.13 m</td></tr>
+      <tr><td>Stage 2 (EKF-adaptive)</td><td>0.15 m</td><td><strong>0.004 m</strong></td></tr>
+    </table>
+    <p>
+      Given a sudden step in true road mu (0.9 → 0.2, simulating hitting ice),
+      <code>mu_hat</code> tracks it to within 0.015 in about 0.02s — well inside the
+      0.3s target I set. Live over ROS2, the same pattern holds: all 7 nodes start
+      clean, 2 replans trigger as the vehicle enters the icy patch, and
+      <code>mu_hat</code> corrects from the initial 0.9 assumption down to ~0.3–0.46.
+    </p>
+
+    <h2>Real problems I hit building this</h2>
+    <p>These aren't written up after the fact to sound impressive — I only caught them by testing across seeds and on purpose-broken cases, not on the first run that happened to look fine.</p>
+    <ul>
+      <li><strong>EKF observability collapse:</strong> the filter can only estimate friction while the tire is actually saturated at its <em>current belief</em> about friction. If that belief drifts to an unsaturated value, the measurement stops carrying information about it and the estimate can get stuck — wrong, with no error shown anywhere. I only caught this running the filter across 9 random seeds (5 failed, though the first one looked perfect); fixed with a leak term pulling the estimate back toward a prior over time.</li>
+      <li><strong>Braking wasn't friction-limited:</strong> the friction-circle constraint only applied to cornering — the speed controller could still ask for more braking force than the tires could deliver on ice. Found by plotting commanded acceleration directly against the friction circle. Fixing it made the naive baseline's worst-case RMSE roughly quintuple (3.64m → 19.80m) — the correct result, not a regression, since a speed profile that assumes highway-grip braking simply can't stop the vehicle in time on ice.</li>
+      <li><strong>Four separate bugs to get MPC working:</strong> an unstable forward-Euler discretization at highway-speed linearization values, a sign error in the cross-track term that made it diverge instead of converge, a low-speed clip floor set too low, and a genuinely infeasible QP during a hard slide that needed a fallback instead of a crash.</li>
+    </ul>
+
+    <h2>Limitations</h2>
+    <ul>
+      <li>Linear tire model (clamped at the friction circle), not a full nonlinear Pacejka model.</li>
+      <li>Single scenario — one double-lane-change corridor; Stage 2 varies the friction along it, not the track geometry.</li>
+      <li>Stage 2's estimator is IMU-only, no wheel-encoder fusion (a deliberate scope choice).</li>
+      <li>Everything here is simulation — no real or scaled hardware platform yet.</li>
+    </ul>
+
+    <p class="note">
+      Full write-up, all figures, and the 72-run / 36-run sweep data are in the
+      repo's <code>docs/RESULTS.md</code>.
+    </p>
+
+    <div class="links">
+      <a href="https://github.com/kaipowei/friction-aware-planner" target="_blank" rel="noopener">View code on GitHub</a>
+    </div>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Kaipo Wei (魏開柏)</span>
+    <span><a href="../index.html">kaipowei.github.io</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

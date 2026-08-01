@@ -95,31 +95,21 @@
   .news-row{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
   .news-row:last-child{border-bottom:none}
   .news-row .d{color:var(--text-soft);white-space:nowrap}
-  @media\(max-width:640px\)\{\.news-row\{grid-template-columns:88px 1fr;gap:10px\}\}
-  /* news expandable */
-  .news-toggle{
-    width:100%;padding:16px 10px;margin:0 -10px;
-    background:none;border:none;cursor:pointer;text-align:left;
-    color:inherit;font:inherit;border-radius:6px;
-    transition:background-color .18s ease;
+  @media(max-width:640px){.news-row{grid-template-columns:88px 1fr;gap:10px}}
+
+  .news-more{margin-top:2px}
+  .news-more-toggle{
+    cursor:pointer;list-style:none;color:var(--link);
+    font-size:.9rem;padding:10px 0;user-select:none;
   }
-  .news-toggle:hover{background:var(--bg-soft)}
-  .news-toggle:focus-visible{outline:2px solid var(--link);outline-offset:-2px}
-  .news-toggle-head{display:flex;justify-content:space-between;align-items:center;gap:14px}
-  .news-chev{
-    width:14px;height:14px;flex:none;stroke:var(--text-soft);
-    transition:transform .3s ease, stroke .18s ease;
-  }
-  .news-toggle:hover .news-chev{stroke:var(--link)}
-  .news-open .news-chev{transform:rotate(180deg)}
-  .news-detail{
-    display:grid;grid-template-rows:0fr;
-    transition:grid-template-rows .38s ease;
-  }
-  .news-open .news-detail{grid-template-rows:1fr}
-  .news-detail-inner{overflow:hidden;min-height:0}
-  .news-rows{padding:0 10px 12px}
-  .news-rows .news-row{padding:6px 0;border:none}
+  .news-more-toggle::-webkit-details-marker{display:none}
+  .news-more-toggle:hover{text-decoration:underline}
+  .news-more-toggle:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:2px}
+  .news-more .open-label{display:none}
+  .news-more[open] .open-label{display:inline}
+  .news-more[open] .closed-label{display:none}
+  .news-more-rows{padding-top:2px}
+  .news-more-rows .news-row:last-child{border-bottom:none}
 
 
   /* ---------- expandable project entries ---------- */
@@ -239,8 +229,8 @@
       <p>
         I'm a robotics graduate student at the <a href="https://umich.edu" target="_blank" rel="noopener">University of Michigan</a>
         with a vehicle engineering background. I build things that move: FSAE suspension and drivetrain
-        hardware, FEA-verified structures, and perception pipelines for ADAS. My focus is
-        motion planning and autonomy for road vehicles.
+        hardware, FEA-verified structures, and — increasingly — planning and control software for
+        autonomous vehicles.
       </p>
       <p class="soft">
         I started on the mechanical side — a B.S. in <a href="https://ve.ntut.edu.tw/" target="_blank" rel="noopener">Vehicle Engineering</a>
@@ -248,126 +238,79 @@
         <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a> Formula SAE team, and a
         thesis applying FEA structural and fatigue analysis. Internships at Foxconn's
         commercial EV division and iPE showed me how vehicles get engineered at production
-        scale — and how much of the industry's future depends on software. That pulled me
-        toward ADAS: computer-vision lane detection, deep-learning perception, and
-        vehicle-dynamics simulation in CarSim and BikeSim. Long term, I want to do R&amp;D
-        at the intersection of vehicle dynamics and autonomy.
+        scale — and how much of the industry's future depends on software. To build that
+        side up, I wrote <a href="projects/friction-aware-planner.html">a motion-planning and tracking stack</a>
+        that plans with a standard kinematic model, shows where that assumption breaks
+        under real tire-friction limits, and fixes it — the same handling and grip
+        intuition from suspension design and CarSim/BikeSim simulation, now applied in
+        software. Long term, I want to do R&amp;D at the intersection of vehicle dynamics
+        and autonomy.
       </p>
     </section>
 
         <section id="news">
       <h2 class="sec">News</h2>
-      <div class="news-item">
-        <button class="news-toggle" aria-expanded="false">
-          <div class="news-toggle-head">
-            <div style="flex:1">
-              <strong>2024–2026: Recent Updates</strong>
-              <div style="font-size:.85rem;color:var(--text-soft);margin-top:2px">Aug 2026 — Feb 2026</div>
-            </div>
-            <svg class="news-chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+      <div class="news-row">
+        <div class="d">Aug 2026</div>
+        <div>Moving to Ann Arbor to begin the MS in Robotics at
+          <a href="https://robotics.umich.edu" target="_blank" rel="noopener">Michigan Robotics</a>.</div>
+      </div>
+      <div class="news-row">
+        <div class="d">Aug 2026</div>
+        <div>Built and published <a href="projects/friction-aware-planner.html">friction-aware-planner</a>, a motion-planning stack that plans in a kinematic model, exposes the resulting tire-friction tracking failure, fixes it with a friction-circle-constrained speed profile, and estimates road friction live with an EKF — running over ROS2/RViz.</div>
+      </div>
+      <div class="news-row">
+        <div class="d">Jul 2026</div>
+        <div>Shipped an AI pipeline that turns daily physics news into curriculum-aligned
+          exam questions, delivered and revised entirely over "Line chat bot".</div>
+      </div>
+      <div class="news-row">
+        <div class="d">Spring 2026</div>
+        <div>Admitted to the MS in Robotics program at the University of Michigan.</div>
+      </div>
+      <details class="news-more">
+        <summary class="news-more-toggle">
+          <span class="closed-label">Show earlier updates</span>
+          <span class="open-label">Hide earlier updates</span>
+        </summary>
+        <div class="news-more-rows">
+          <div class="news-row">
+            <div class="d">Feb 2026</div>
+            <div>Graduated with a B.S. in Vehicle Engineering from National Taipei University
+              of Technology.</div>
           </div>
-        </button>
-        <div class="news-detail">
-          <div class="news-detail-inner">
-            <div class="news-rows">
-              <div class="news-row">
-                <div class="d">Aug 2026</div>
-                <div>Moving to Ann Arbor to begin the MS in Robotics at <a href="https://robotics.umich.edu" target="_blank" rel="noopener">Michigan Robotics</a>.</div>
-              </div>
-              <div class="news-row">
-                <div class="d">Jul 2026</div>
-                <div>Shipped an AI pipeline that turns daily physics news into curriculum-aligned exam questions, delivered and revised entirely over "Line chat bot".</div>
-              </div>
-              <div class="news-row">
-                <div class="d">Spring 2026</div>
-                <div>Admitted to the MS in Robotics program at the University of Michigan.</div>
-              </div>
-              <div class="news-row">
-                <div class="d">Feb 2026</div>
-                <div>Graduated with a B.S. in Vehicle Engineering from National Taipei University of Technology.</div>
-              </div>
-            </div>
+          <div class="news-row">
+            <div class="d">2025</div>
+            <div>Competed in AI CUP 2025 — cardiac CT segmentation (UNet3D) and aortic-valve
+              detection (YOLOv12).</div>
+          </div>
+          <div class="news-row">
+            <div class="d">Jul–Aug 2024</div>
+            <div>R&amp;D intern at IPE Innotech Performance Exhaust — design, simulation, and
+              manufacturing of magnesium alloy wheels for the Porsche GT3RS.</div>
+          </div>
+          <div class="news-row">
+            <div class="d">Sep 2023</div>
+            <div>Joined the Structural &amp; Optimization Lab at NTUT, working on scooter-frame
+              fatigue analysis and optimization.</div>
+          </div>
+          <div class="news-row">
+            <div class="d">Jul–Aug 2023</div>
+            <div>R&amp;D intern at Foxconn CCEV, contributing to the design of a full-electric
+              commercial van (Model N).</div>
+          </div>
+          <div class="news-row">
+            <div class="d">Oct 2022</div>
+            <div>Joined Taipei Tech Racing as a chassis team member — Formula Student Taiwan
+              2023, 2nd place.</div>
+          </div>
+          <div class="news-row">
+            <div class="d">Sep 2021</div>
+            <div>Began a B.S. in Vehicle Engineering at National Taipei University of
+              Technology.</div>
           </div>
         </div>
-      </div>
-
-      <div class="news-item">
-        <button class="news-toggle" aria-expanded="false">
-          <div class="news-toggle-head">
-            <div style="flex:1">
-              <strong>2024–2025: Competitions &amp; Work</strong>
-              <div style="font-size:.85rem;color:var(--text-soft);margin-top:2px">AI CUP 2025 — Jul 2024</div>
-            </div>
-            <svg class="news-chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
-        </button>
-        <div class="news-detail">
-          <div class="news-detail-inner">
-            <div class="news-rows">
-              <div class="news-row">
-                <div class="d">2025</div>
-                <div>Competed in AI CUP 2025 — cardiac CT segmentation (UNet3D) and aortic-valve detection (YOLOv12).</div>
-              </div>
-              <div class="news-row">
-                <div class="d">Jul–Aug 2024</div>
-                <div>R&amp;D intern at IPE Innotech Performance Exhaust — design, simulation, and manufacturing of magnesium alloy wheels for the Porsche GT3RS.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <button class="news-toggle" aria-expanded="false">
-          <div class="news-toggle-head">
-            <div style="flex:1">
-              <strong>2023–2024: Research &amp; Racing</strong>
-              <div style="font-size:.85rem;color:var(--text-soft);margin-top:2px">Sep 2023 — Oct 2022</div>
-            </div>
-            <svg class="news-chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
-        </button>
-        <div class="news-detail">
-          <div class="news-detail-inner">
-            <div class="news-rows">
-              <div class="news-row">
-                <div class="d">Sep 2023</div>
-                <div>Joined the Structural &amp; Optimization Lab at NTUT, working on scooter-frame fatigue analysis and optimization.</div>
-              </div>
-              <div class="news-row">
-                <div class="d">Jul–Aug 2023</div>
-                <div>R&amp;D intern at Foxconn CCEV, contributing to the design of a full-electric commercial van (Model N).</div>
-              </div>
-              <div class="news-row">
-                <div class="d">Oct 2022</div>
-                <div>Joined Taipei Tech Racing as a chassis team member — Formula Student Taiwan 2023, 2nd place.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <button class="news-toggle" aria-expanded="false">
-          <div class="news-toggle-head">
-            <div style="flex:1">
-              <strong>2021–2022: Education Start</strong>
-              <div style="font-size:.85rem;color:var(--text-soft);margin-top:2px">Sep 2021</div>
-            </div>
-            <svg class="news-chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
-        </button>
-        <div class="news-detail">
-          <div class="news-detail-inner">
-            <div class="news-rows">
-              <div class="news-row">
-                <div class="d">Sep 2021</div>
-                <div>Began a B.S. in Vehicle Engineering at National Taipei University of Technology.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </details>
     </section>
 
     <section id="projects">
@@ -375,6 +318,50 @@
 
       <article class="entry open">
         <button class="entry-toggle" aria-expanded="true">
+          <div class="entry-head">
+            <h3>Friction-Aware Motion Planning for Autonomous Vehicles</h3>
+            <span class="meta">Motion planning &amp; controls
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </div>
+          <p class="entry-summary">
+            Plans in a kinematic model, exposes the tire-friction tracking failure it
+            causes, fixes it with a friction-circle-constrained speed profile, then
+            estimates road friction live with an EKF — running over ROS2/RViz.
+          </p>
+        </button>
+        <div class="entry-detail">
+          <div class="entry-detail-inner"><div class="entry-detail-body">
+            <div class="demo-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0">
+              <figure class="entry-img" style="margin:0">
+                <video src="assets/fap-naive-pure-pursuit.mp4" autoplay loop muted playsinline style="width:100%;display:block;border:1px solid var(--line);border-radius:4px;aspect-ratio:16/9;object-fit:cover;background:var(--bg-soft)"></video>
+                <figcaption>Naive (curvature-blind) — spins out</figcaption>
+              </figure>
+              <figure class="entry-img" style="margin:0">
+                <video src="assets/fap-friction-aware-pure-pursuit.mp4" autoplay loop muted playsinline style="width:100%;display:block;border:1px solid var(--line);border-radius:4px;aspect-ratio:16/9;object-fit:cover;background:var(--bg-soft)"></video>
+                <figcaption>Friction-aware — fixed</figcaption>
+              </figure>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="num">36/36</div><div class="lbl">Friction-aware success, vs 22/36 naive</div></div>
+              <div class="metric"><div class="num">0.004m</div><div class="lbl">Stage 2 RMSE std across 36 runs</div></div>
+            </div>
+            <ul>
+              <li><strong>The gap it demonstrates:</strong> planner and controllers only ever reason in a kinematic model; the simulator steps a dynamic bicycle model with a friction-circle-saturated tire, so the mismatch between assumption and reality shows up as real tracking error.</li>
+              <li><strong>The fix:</strong> a friction-aware speed profile (<code>v_max = sqrt(mu·g·R)</code>) tested across Pure Pursuit, Stanley, and MPC — 36/36 success vs. naive's 22/36 over a 72-run speed×friction×controller sweep.</li>
+              <li><strong>Going further:</strong> Stage 2 drops the "friction is known" assumption too — an EKF estimates road friction and sideslip live from a noisy IMU and replans mid-corner as the road changes.</li>
+              <li><strong>Live, not just offline:</strong> the same stack runs as ROS2 nodes, visualized in RViz.</li>
+            </ul>
+            <div class="entry-links">
+              <a href="projects/friction-aware-planner.html">Full write-up →</a>
+              <a href="https://github.com/kaipowei/friction-aware-planner" target="_blank" rel="noopener">Code</a>
+            </div>
+          </div></div>
+        </div>
+      </article>
+
+      <article class="entry">
+        <button class="entry-toggle" aria-expanded="false">
           <div class="entry-head">
             <h3>Medical Image Segmentation &amp; Detection — AI CUP 2025</h3>
             <span class="meta">Deep learning
@@ -632,9 +619,9 @@
 
     <section id="skills">
       <h2 class="sec">Skills</h2>
-      <div class="skill-row"><div class="k">Software</div><div>Python, C++, OpenCV, PyTorch, Git</div></div>
+      <div class="skill-row"><div class="k">Software</div><div>Python, C++, ROS2, OpenCV, PyTorch, Git</div></div>
       <div class="skill-row"><div class="k">Simulation &amp; analysis</div><div>CarSim, BikeSim, FEA, CAD</div></div>
-      <div class="skill-row"><div class="k">Domains</div><div>Vehicle dynamics, ADAS, motion planning, suspension design</div></div>
+      <div class="skill-row"><div class="k">Domains</div><div>Vehicle dynamics, motion planning (Hybrid-A*), control (Pure Pursuit, Stanley, MPC), state estimation (EKF), ADAS, suspension design</div></div>
     </section>
 
     <section id="contact">
@@ -668,14 +655,6 @@
     });
   });
 
-  // News timeline toggle
-  document.querySelectorAll('.news-toggle').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var item = btn.closest('.news-item');
-      var isOpen = item.classList.toggle('news-open');
-      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-  });
 </script>
 
 </body>
