@@ -196,7 +196,7 @@
          onerror="this.style.display='none'">
     <h2>Kaipo Wei</h2>
     <div class="cn">魏開柏</div>
-    <p class="bio">MS Robotics student at the University of Michigan. Autonomous vehicles &amp; motion planning.</p>
+    <p class="bio">MS Robotics student and research assistant at the University of Michigan. Autonomous vehicles &amp; motion planning.</p>
     <ul class="side-links">
       <li>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -230,13 +230,15 @@
         I'm a robotics graduate student at the <a href="https://umich.edu" target="_blank" rel="noopener">University of Michigan</a>
         with a vehicle engineering background. I build things that move: FSAE suspension and drivetrain
         hardware, FEA-verified structures, and — increasingly — planning and control software for
-        autonomous vehicles.
+        autonomous vehicles. I'm also a research assistant in Michigan's
+        Mobility Transformation Lab,
+        working on sim-to-real transfer for autonomous racing on the F1TENTH platform.
       </p>
       <p class="soft">
         I started on the mechanical side — a B.S. in <a href="https://ve.ntut.edu.tw/" target="_blank" rel="noopener">Vehicle Engineering</a>
         at National Taipei University of Technology (GPA 3.6/4.0), a year on the
         <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a> Formula SAE team, and a
-        thesis applying FEA structural and fatigue analysis. Internships at Foxconn's
+        capstone project applying FEA structural and fatigue analysis (2nd place in the department competition). Internships at Foxconn's
         commercial EV division and iPE showed me how vehicles get engineered at production
         scale — and how much of the industry's future depends on software. To build that
         side up, I wrote <a href="projects/friction-aware-planner.html">a motion-planning and tracking stack</a>
@@ -251,14 +253,14 @@
         <section id="news">
       <h2 class="sec">News</h2>
       <div class="news-row">
-        <div class="d">Oct 2026</div>
-        <div>Joined the Mobility Transformation Lab at Michigan as a research assistant, working on
-          sim-to-real transfer for autonomous racing on the F1TENTH platform.</div>
+        <div class="d">Sep 2026</div>
+        <div>Joined the Mobility Transformation Lab (Prof. Henry Liu, Mcity) as a graduate research assistant,
+          working on sim-to-real transfer for autonomous racing on the F1TENTH platform.</div>
       </div>
       <div class="news-row">
         <div class="d">Aug 2026</div>
-        <div>Published <a href="https://github.com/kaipowei/av-perception-localization-stack" target="_blank" rel="noopener">av-perception-localization-stack</a>, a C++17 / CUDA / ROS2 perception and localization stack
-          (LiDAR obstacle detection, ICP + EKF pose estimate) simulated in Gazebo — the sensing layer that friction-aware-planner assumes.</div>
+        <div>Extended <a href="projects/friction-aware-planner.html">friction-aware-planner</a> with a perception and localization layer —
+          <a href="https://github.com/kaipowei/av-perception-localization-stack" target="_blank" rel="noopener">C++17 / CUDA / ROS2</a>, LiDAR obstacle detection and an EKF pose estimate, closed loop in Gazebo.</div>
       </div>
       <div class="news-row">
         <div class="d">Aug 2026</div>
@@ -329,15 +331,16 @@
       <article class="entry open">
         <button class="entry-toggle" aria-expanded="true">
           <div class="entry-head">
-            <h3>Friction-Aware Motion Planning for Autonomous Vehicles</h3>
-            <span class="meta">Motion planning &amp; controls
+            <h3>Friction-Aware Motion Planning and Perception for Autonomous Vehicles</h3>
+            <span class="meta">Planning, controls &amp; perception
               <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </div>
           <p class="entry-summary">
             Plans in a kinematic model, exposes the tire-friction tracking failure it
             causes, fixes it with a friction-circle-constrained speed profile, then
-            estimates road friction live with an EKF — running over ROS2/RViz.
+            estimates road friction live with an EKF — running over ROS2/RViz. A C++17/CUDA
+            perception and localization layer closes the loop from LiDAR to control in Gazebo.
           </p>
         </button>
         <div class="entry-detail">
@@ -358,13 +361,15 @@
             </div>
             <ul>
               <li><strong>The gap it demonstrates:</strong> planner and controllers only ever reason in a kinematic model; the simulator steps a dynamic bicycle model with a friction-circle-saturated tire, so the mismatch between assumption and reality shows up as real tracking error.</li>
-              <li><strong>The fix:</strong> a friction-aware speed profile (<code>v_max = sqrt(mu·g·R)</code>) tested across Pure Pursuit, Stanley, and MPC — 36/36 success vs. naive's 22/36 over a 72-run speed×friction×controller sweep.</li>
+              <li><strong>The fix:</strong> a friction-aware speed profile (<code>v_max = sqrt(mu·g·R)</code>) tested across Pure Pursuit, Stanley, and MPC — 36/36 success vs. naive's 22/36 over a 72-run speed×friction×controller sweep, and worst-case tracking error cut from 20.4 m to 0.34 m.</li>
               <li><strong>Going further:</strong> Stage 2 drops the "friction is known" assumption too — an EKF estimates road friction and sideslip live from a noisy IMU and replans mid-corner as the road changes.</li>
               <li><strong>Live, not just offline:</strong> the same stack runs as ROS2 nodes, visualized in RViz.</li>
+              <li><strong>Perception and localization:</strong> a custom C++17/CUDA voxel-grid downsampler (4.5x GPU speedup at 1M points) and RANSAC/Euclidean-clustering pipeline that removed 5 of 7 false-positive detections without losing a true one, plus a LiDAR/IMU EKF for localization (17% lower error). Run closed-loop in Gazebo, the vehicle reaches a goal 6 m away autonomously in 13.5 s.</li>
             </ul>
             <div class="entry-links">
               <a href="projects/friction-aware-planner.html">Full write-up →</a>
-              <a href="https://github.com/kaipowei/friction-aware-planner" target="_blank" rel="noopener">Code</a>
+              <a href="https://github.com/kaipowei/friction-aware-adaptive-motion-planner-ros2" target="_blank" rel="noopener">Planner code</a>
+              <a href="https://github.com/kaipowei/av-perception-localization-stack" target="_blank" rel="noopener">Perception code</a>
             </div>
           </div></div>
         </div>
@@ -465,6 +470,7 @@
               <li><strong>Power transmission:</strong> optimized chain/belt packaging, spacing, and load paths</li>
               <li><strong>Compliance:</strong> verified all components against FSAE competition rules</li>
               <li><strong>Simulation:</strong> FEA verification of structural strength and stiffness</li>
+              <li><strong>Result:</strong> 31% cost reduction and 16% weight savings</li>
             </ul>
 
             <figure class="entry-img">
@@ -473,8 +479,8 @@
             </figure>
 
             <figure class="entry-img">
-              <img src="assets/fsae-ttr-detail.jpg" alt="Close-up of TTR7 drivetrain and chassis in pit area" onerror="this.parentElement.style.display='none'">
-              <figcaption>On-track detail — drivetrain mounted and tested under competition conditions</figcaption>
+              <img src="assets/fsae-ttr-detail.jpg" alt="Close-up of the TTR7" onerror="this.parentElement.style.display='none'">
+              <figcaption>TTR7 close-up</figcaption>
             </figure>
 
             <p><strong>Team context:</strong> One year on <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a>, the NTUT Formula Student team. Took components from CAD through machining to a running race car. Contributed to 2nd place finish at national competition.</p>
@@ -500,9 +506,9 @@
             <div class="metrics">
               <div class="metric"><div class="num">+339%</div><div class="lbl">Fatigue life gain</div></div>
               <div class="metric"><div class="num">13.6k cycles</div><div class="lbl">vs 3.1k original</div></div>
-              <div class="metric"><div class="num">116.8 km</div><div class="lbl">Equivalent mileage</div></div>
+              <div class="metric"><div class="num">116,805 km</div><div class="lbl">Equivalent mileage, from 26,600</div></div>
             </div>
-            <p><strong>Problem:</strong> Scooter frame fails under real-world bump loading. Need validated fatigue analysis and design solution.</p>
+            <p><strong>Goal:</strong> evaluate and improve the fatigue life of a scooter frame by tying a real road test to CAE. I led a 4-person team, and the project took 2nd place in the Vehicle Engineering department's capstone competition.</p>
 
             <figure class="entry-img">
               <img src="assets/scooter-cad-new.png" alt="SolidWorks CAD scooter frame model" onerror="this.parentElement.style.display='none'">
@@ -515,6 +521,7 @@
               <li>Set up experiment with 3 accelerometers (front, left-rear, right-rear)</li>
               <li>Derived center-of-gravity acceleration transformation formula</li>
               <li>Converted time-domain vibration data to PSD for HyperWorks</li>
+              <li>Validated the FEA model against road-test data through a BikeSim multibody simulation across 4 road conditions, with the rig checked against CNS 15819-5 durability regulations</li>
             </ul>
 
             <figure class="entry-img">
@@ -524,7 +531,7 @@
 
             <figure class="entry-img">
               <img src="assets/scooter-stress-optimized.png" alt="Optimized design with improved stress distribution" onerror="this.parentElement.style.display='none'">
-              <figcaption>After optimization — thickness 2.4→2.7mm doubles structural capacity</figcaption>
+              <figcaption>After optimization — thickness 2.4 → 2.7 mm, fatigue life 3,093 → 13,582 cycles</figcaption>
             </figure>
 
             <figure class="entry-img">
@@ -532,7 +539,7 @@
               <figcaption>Life prediction contour — identifies weak points for design iteration</figcaption>
             </figure>
 
-            <p><strong>Solution &amp; Results:</strong> Simple 0.3mm thickness increase (2% change) tripled fatigue life from 26,600 km to 116,805 km — a realistic, manufacturable improvement validated by rigorous simulation.</p>
+            <p><strong>Solution &amp; Results:</strong> Increasing the tube thickness from 2.4 mm to 2.7 mm (about 12.5%) raised fatigue life from 3,093 to 13,582 cycles, +339% — roughly 26,600 km to 116,805 km, past the 100,000 km durability target. A small, manufacturable change; I did not have time for topology optimization.</p>
             <p style="color:var(--text-soft);font-size:.95rem"><em>Key takeaway: Small design tweaks grounded in real data and FEA beats guessing.</em></p>
           </div></div>
         </div>
@@ -552,10 +559,6 @@
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
-            <figure class="entry-img">
-              <img src="assets/carsim.jpg" alt="CarSim vehicle dynamics simulation" onerror="this.parentElement.style.display='none'">
-              <figcaption>Maneuver simulation in CarSim</figcaption>
-            </figure>
             <p>
               Modeled and analyzed vehicle behavior in CarSim and BikeSim — handling,
               stability, and maneuver simulation that connects mechanical design decisions to
@@ -571,7 +574,27 @@
 
       <article class="xentry">
         <div class="entry-head">
-          <h3>Engineering Intern — Foxconn, Commercial EV Division</h3>
+          <h3>Graduate Research Assistant — Mobility Transformation Lab, University of Michigan</h3>
+          <span class="meta">Sep 2026 – present</span>
+        </div>
+        <p>Advised by Prof. Henry Liu (Director, Mcity), working under PhD candidate Zhijie Qiao on
+        sim-to-real transfer for autonomous racing on the F1TENTH platform.</p>
+      </article>
+
+      <article class="xentry">
+        <div class="entry-head">
+          <h3>Undergraduate Student Researcher — Structural Optimization Lab, NTUT</h3>
+          <span class="meta">Sep 2023 – Sep 2024</span>
+        </div>
+        <p>Led a 4-person team on the scooter-frame fatigue project: designed a multi-accelerometer test rig and
+        derived a geometric sensor-fusion algorithm that converts the raw signals into center-of-gravity motion,
+        then used PSD fatigue analysis to optimize frame thickness (+339% fatigue life). 2nd place in the
+        department's capstone competition.</p>
+      </article>
+
+      <article class="xentry">
+        <div class="entry-head">
+          <h3>R&amp;D Intern — Foxconn, Commercial EV Division</h3>
           <span class="meta">Jul–Aug 2023</span>
         </div>
         <p><strong>Project:</strong> Full-electric commercial van (Model N) — cockpit design, ergonomics, and chassis layout for production-scale EV.</p>
@@ -581,9 +604,9 @@
         </figure>
         <p><strong>Contributions:</strong></p>
         <ul style="margin-left:22px">
-          <li>Cockpit ergonomics design — submitted 2 proposals, both approved by management</li>
-          <li>Chassis structural layout — collaborated with structural &amp; EE teams on mounting points and routing</li>
-          <li>Cross-functional coordination — worked alongside mechanical, electrical, and human-factors engineers</li>
+          <li>Cockpit ergonomics design — 2 proposals adopted</li>
+          <li>Chassis structural layout for the van</li>
+          <li>Cross-functional coordination — worked with the ADAS, chassis, and human-factors teams on system integration</li>
         </ul>
         <p style="color:var(--text-soft);font-size:.95rem">Exposed me to vehicle development at production scale. Model N made its public debut at Hon Hai Tech Day 2023 (<a href="https://www.youtube.com/watch?v=zvPJuWKjSls" target="_blank" rel="noopener">video</a>).</p>
       </article>
@@ -629,8 +652,8 @@
 
     <section id="skills">
       <h2 class="sec">Skills</h2>
-      <div class="skill-row"><div class="k">Software</div><div>Python, C++, ROS2, OpenCV, PyTorch, Git</div></div>
-      <div class="skill-row"><div class="k">Simulation &amp; analysis</div><div>CarSim, BikeSim, FEA, CAD</div></div>
+      <div class="skill-row"><div class="k">Software</div><div>Python, C++, CUDA, ROS2, Gazebo, OpenCV, PyTorch, Git</div></div>
+      <div class="skill-row"><div class="k">Simulation &amp; analysis</div><div>CarSim, BikeSim, HyperWorks (FEA, PSD fatigue), SolidWorks</div></div>
       <div class="skill-row"><div class="k">Domains</div><div>Vehicle dynamics, motion planning (Hybrid-A*), control (Pure Pursuit, Stanley, MPC), state estimation (EKF), ADAS, suspension design</div></div>
     </section>
 

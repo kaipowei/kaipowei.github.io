@@ -194,6 +194,19 @@
       <code>mu_hat</code> corrects from the initial 0.9 assumption down to ~0.3–0.46.
     </p>
 
+    <h2>Perception and localization</h2>
+    <p>
+      The planner assumes the vehicle's pose and the obstacles are known. A companion repo,
+      <a href="https://github.com/kaipowei/av-perception-localization-stack" target="_blank" rel="noopener">av-perception-localization-stack</a>,
+      supplies that sensing layer so the loop runs from LiDAR to control, in Gazebo, with this
+      project's Hybrid-A* planner and MPC controller used unmodified.
+    </p>
+    <ul>
+      <li><strong>LiDAR perception:</strong> a custom C++17/CUDA voxel-grid downsampler and a RANSAC ground-segmentation plus Euclidean-clustering pipeline. The GPU version is 4.5x faster than the CPU one at 1M points (and slower below roughly 100k), and the segmentation step removed 5 of 7 false-positive detections without losing a true obstacle.</li>
+      <li><strong>Localization:</strong> a LiDAR/IMU EKF, with a 17% error reduction.</li>
+      <li><strong>Closed loop:</strong> in simulation the vehicle reaches a goal 6 m away autonomously in 13.5 s.</li>
+    </ul>
+
     <h2>Real problems I hit building this</h2>
     <p>These aren't written up after the fact to sound impressive — I only caught them by testing across seeds and on purpose-broken cases, not on the first run that happened to look fine.</p>
     <ul>
@@ -216,7 +229,8 @@
     </p>
 
     <div class="links">
-      <a href="https://github.com/kaipowei/friction-aware-planner" target="_blank" rel="noopener">View code on GitHub</a>
+      <a href="https://github.com/kaipowei/friction-aware-adaptive-motion-planner-ros2" target="_blank" rel="noopener">Planner code on GitHub</a>
+      <a href="https://github.com/kaipowei/av-perception-localization-stack" target="_blank" rel="noopener">Perception code on GitHub</a>
     </div>
   </article>
 </div>
