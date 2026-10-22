@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROB550 Armlab: Vision-Guided Manipulation | Kaipo Wei</title>
+<meta name="description" content="A UFactory Lite 6 arm and an RGB-D camera that find, grasp and stack colored blocks. AprilTag calibration, HSV block detection, closed-form geometric IK and a Python state machine. ROB 550 at the University of Michigan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1217;
+    --bg-soft:#151B22;
+    --text:#E9EDF2;
+    --text-soft:#9AA6B4;
+    --line:#262E38;
+    --link:#58A6FF;
+    --sans:'Inter',system-ui,sans-serif;
+    --maxw:760px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--sans);font-size:16.5px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  a:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(14,18,23,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .site-title{font-weight:600;font-size:16px;color:var(--text)}
+  .site-title:hover{text-decoration:none;color:var(--link)}
+  .back{font-size:14.5px}
+
+  article{padding:52px 0 80px}
+  .meta{font-size:.85rem;color:var(--text-soft);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:2rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:14px}
+  .lead{color:var(--text-soft);font-size:1.05rem;margin-bottom:8px}
+  h2{font-size:1.3rem;font-weight:700;letter-spacing:-.01em;margin:40px 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  p{margin:12px 0}
+  ul{margin:10px 0 10px 22px;color:var(--text-soft)}
+  li{margin:5px 0}
+  li strong{color:var(--text);font-weight:600}
+  figure{margin:20px 0}
+  figure img, figure video{
+    width:100%;display:block;border:1px solid var(--line);
+    border-radius:4px;background:var(--bg-soft);
+  }
+  figure img.plot{background:#fff}
+  figcaption{font-size:.82rem;color:var(--text-soft);margin-top:7px}
+  .metrics{display:flex;gap:34px;flex-wrap:wrap;margin:18px 0 4px}
+  .metric .num{font-size:1.6rem;font-weight:700;letter-spacing:-.01em}
+  .metric .lbl{font-size:.78rem;color:var(--text-soft);letter-spacing:.04em;text-transform:uppercase}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+  .grid2 figure{margin:0}
+  .grid2 .tag{font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;color:var(--text-soft)}
+  .grid2 video, .grid2 img.fill{aspect-ratio:9/16;object-fit:cover}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr}}
+  .pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+  .pipe div{border:1px solid var(--line);border-radius:4px;background:var(--bg-soft);padding:12px 12px 10px;font-size:.86rem;color:var(--text-soft);line-height:1.45}
+  .pipe b{display:block;color:var(--text);font-size:.95rem;margin-bottom:3px}
+  @media(max-width:600px){.pipe{grid-template-columns:1fr 1fr}}
+  footer{border-top:1px solid var(--line);padding:22px 0;font-size:.85rem;color:var(--text-soft)}
+  footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="site-title" href="../index.html">Kaipo Wei</a>
+    <a class="back" href="../index.html#projects">← Back to projects</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <article>
+    <div class="meta">Project · Manipulation &amp; perception · ROB 550, University of Michigan</div>
+    <h1>ROB550 Armlab: Vision-Guided Manipulation with a 6-DOF Arm</h1>
+    <p class="lead">
+      A UFactory Lite 6 arm and an RGB-D camera that find colored blocks, grasp them and
+      stack them. Team of 4; I was the software developer for 3 of the 4 competition events.
+    </p>
+
+    <div class="metrics">
+      <div class="metric"><div class="num">4/4</div><div class="lbl">Competition events completed</div></div>
+      <div class="metric"><div class="num">15</div><div class="lbl">Block tower, within the 600 s limit</div></div>
+      <div class="metric"><div class="num">26/26</div><div class="lbl">Colors classified correctly</div></div>
+    </div>
+
+    <div class="grid2">
+      <figure>
+        <div class="tag">Event 3: Stack 'em high</div>
+        <video src="../assets/armlab-event3.mp4" autoplay loop muted playsinline></video>
+      </figure>
+      <figure>
+        <div class="tag">Event 4: To the sky</div>
+        <video src="../assets/armlab-event4.mp4" autoplay loop muted playsinline></video>
+      </figure>
+    </div>
+
+    <h2>Pipeline</h2>
+    <div class="pipe">
+      <div><b>1. Calibrate</b>AprilTags give the camera pose, so pixels map to world mm.</div>
+      <div><b>2. Detect</b>RGB-D: position, 6 colors, 2 sizes, stack height.</div>
+      <div><b>3. Solve IK</b>Closed-form, wrist-center. All targets solved before the arm moves.</div>
+      <div><b>4. Execute</b>Python state machine: scan, pick, place. One retry, then stop.</div>
+    </div>
+
+    <h2>Perception</h2>
+    <div class="grid2" style="grid-template-columns:1fr 1fr">
+      <figure>
+        <img class="plot" src="../assets/armlab-confusion.png" alt="Color confusion matrix, all 26 blocks on the diagonal">
+        <figcaption>Color confusion matrix: 26 of 26 correct (OpenCV HSV).</figcaption>
+      </figure>
+      <figure>
+        <img class="plot" src="../assets/armlab-position-error.png" alt="Block detector position error map">
+        <figcaption>Position error across the board: all but one block within about 2 mm. The outlier (about 18 mm) sits at the edge of the detected area.</figcaption>
+      </figure>
+    </div>
+
+    <h2>Kinematics</h2>
+    <figure>
+      <img class="plot" src="../assets/armlab-ik.png" alt="Geometric IK: wrist center and the two-link triangle">
+      <figcaption>The spherical wrist lets the problem split: J1 to J3 from the wrist point (law of cosines), then J4 to J6 from the target orientation.</figcaption>
+    </figure>
+    <figure>
+      <img class="plot" src="../assets/armlab-reachability.png" alt="Top-down grasp reachability on the board">
+      <figcaption>Top-down grasp reachability: 1,779 of 1,891 board points (94%). The misses are the far corners. Round trip through FK over 500 random poses: 500/500 solved, about zero error.</figcaption>
+    </figure>
+
+    <h2>Competition tricks</h2>
+    <ul>
+      <li><strong>Straight-down grasp:</strong> hover 70 mm above the block, then descend in 20 mm steps. Joint-space moves arc and clip neighbors.</li>
+      <li><strong>Side-place from block 11 up:</strong> rotate the gripper 90 degrees at a fixed point, then slide in sideways so the wrist clears the tower.</li>
+      <li><strong>No wrist flips:</strong> of the IK solutions, pick the one closest to the previous pose.</li>
+      <li><strong>No flicker:</strong> a block counts only if it appears in 60% of 5 scan frames.</li>
+    </ul>
+
+    <figure style="max-width:420px">
+      <img src="../assets/armlab-towers.jpg" alt="Two rainbow-ordered towers built by the arm">
+      <figcaption>Event 3 result: two towers in rainbow order, large and small blocks interleaved.</figcaption>
+    </figure>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Kaipo Wei (魏開柏)</span>
+    <span><a href="../index.html">kaipowei.github.io</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

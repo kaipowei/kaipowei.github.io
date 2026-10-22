@@ -171,6 +171,22 @@
     font-size:.85rem;color:var(--text-soft);
   }
   footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+  /* compact visual cards */
+  .thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 6px;align-items:start}
+  .thumbs.two{grid-template-columns:repeat(2,1fr)}
+  .thumbs figure{margin:0}
+  .thumbs img,.thumbs video{width:100%;display:block;border:1px solid var(--line);border-radius:4px;background:#fff;object-fit:contain}
+  .thumbs video{background:var(--bg-soft)}
+  .thumbs.tall img,.thumbs.tall video{aspect-ratio:3/4;object-fit:cover}
+  .thumbs figcaption{font-size:.78rem;color:var(--text-soft);margin-top:5px;line-height:1.4}
+  @media(max-width:640px){.thumbs{grid-template-columns:1fr 1fr}.thumbs.tall{grid-template-columns:1fr 1fr}}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0;font-size:.85rem;color:var(--text-soft)}
+  .flow span{border:1px solid var(--line);border-radius:4px;background:var(--bg-soft);padding:5px 10px}
+  .xrow{display:grid;grid-template-columns:1fr 180px;gap:18px;align-items:start}
+  .xrow img{width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--line);border-radius:4px;background:var(--bg-soft);display:block}
+  .xrow.noimg{display:block}
+  @media(max-width:640px){.xrow{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -227,49 +243,34 @@
     <section id="about">
       <h1>From vehicle dynamics to autonomous driving</h1>
       <p>
-        I'm a robotics graduate student at the <a href="https://umich.edu" target="_blank" rel="noopener">University of Michigan</a>
-        with a vehicle engineering background. I build things that move: FSAE suspension and drivetrain
-        hardware, FEA-verified structures, and — increasingly — planning and control software for
-        autonomous vehicles. I'm also a research assistant in Michigan's
-        Mobility Transformation Lab,
-        working on sim-to-real transfer for autonomous racing on the F1TENTH platform.
+        MS Robotics student and research assistant at the <a href="https://umich.edu" target="_blank" rel="noopener">University of Michigan</a>
+        (Mobility Transformation Lab, F1TENTH sim-to-real). I came from vehicle engineering: FSAE, FEA, and now
+        planning, perception and manipulation software.
       </p>
       <p class="soft">
-        I started on the mechanical side — a B.S. in <a href="https://ve.ntut.edu.tw/" target="_blank" rel="noopener">Vehicle Engineering</a>
-        at National Taipei University of Technology (GPA 3.6/4.0), a year on the
-        <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a> Formula SAE team, and a
-        capstone project applying FEA structural and fatigue analysis (2nd place in the department competition). Internships at Foxconn's
-        commercial EV division and iPE showed me how vehicles get engineered at production
-        scale — and how much of the industry's future depends on software. To build that
-        side up, I wrote <a href="projects/friction-aware-planner.html">a motion-planning and tracking stack</a>
-        that plans with a standard kinematic model, shows where that assumption breaks
-        under real tire-friction limits, and fixes it — the same handling and grip
-        intuition from suspension design and CarSim/BikeSim simulation, now applied in
-        software. Long term, I want to do R&amp;D at the intersection of vehicle dynamics
-        and autonomy.
+        B.S. in <a href="https://ve.ntut.edu.tw/" target="_blank" rel="noopener">Vehicle Engineering</a>, NTUT (GPA 3.61/4.0).
+        Internships at Foxconn's commercial EV division and iPE. Long term: R&amp;D at the intersection of vehicle dynamics and autonomy.
       </p>
     </section>
 
-        <section id="news">
+
+    <section id="news">
       <h2 class="sec">News</h2>
       <div class="news-row">
+        <div class="d">Oct 2026</div>
+        <div>Finished ROB 550 Armlab: all four events completed, 15-block tower. <a href="projects/armlab.html">Write-up</a>.</div>
+      </div>
+      <div class="news-row">
         <div class="d">Sep 2026</div>
-        <div>Joined the Mobility Transformation Lab (Prof. Henry Liu, Mcity) as a graduate research assistant,
-          working on sim-to-real transfer for autonomous racing on the F1TENTH platform.</div>
+        <div>Joined the Mobility Transformation Lab as a research assistant: F1TENTH sim-to-real.</div>
       </div>
       <div class="news-row">
         <div class="d">Aug 2026</div>
-        <div>Extended <a href="projects/friction-aware-planner.html">friction-aware-planner</a> with a perception and localization layer —
-          <a href="https://github.com/kaipowei/av-perception-localization-stack" target="_blank" rel="noopener">C++17 / CUDA / ROS2</a>, LiDAR obstacle detection and an EKF pose estimate, closed loop in Gazebo.</div>
+        <div>Started the MS in Robotics at <a href="https://robotics.umich.edu" target="_blank" rel="noopener">Michigan Robotics</a>.</div>
       </div>
       <div class="news-row">
         <div class="d">Aug 2026</div>
-        <div>Moving to Ann Arbor to begin the MS in Robotics at
-          <a href="https://robotics.umich.edu" target="_blank" rel="noopener">Michigan Robotics</a>.</div>
-      </div>
-      <div class="news-row">
-        <div class="d">Aug 2026</div>
-        <div>Built and published <a href="projects/friction-aware-planner.html">friction-aware-planner</a>, a motion-planning stack that plans in a kinematic model, exposes the resulting tire-friction tracking failure, fixes it with a friction-circle-constrained speed profile, and estimates road friction live with an EKF — running over ROS2/RViz.</div>
+        <div>Published <a href="projects/friction-aware-planner.html">friction-aware-planner</a> and its C++17/CUDA perception layer.</div>
       </div>
       <details class="news-more">
         <summary class="news-more-toggle">
@@ -279,138 +280,101 @@
         <div class="news-more-rows">
           <div class="news-row">
             <div class="d">Jul 2026</div>
-            <div>Shipped an AI pipeline that turns daily physics news into curriculum-aligned
-              exam questions, delivered and revised entirely over "Line chat bot".</div>
+            <div>Shipped an AI pipeline that turns daily physics news into exam questions, delivered over a LINE bot.</div>
           </div>
           <div class="news-row">
             <div class="d">Spring 2026</div>
-            <div>Admitted to the MS in Robotics program at the University of Michigan.</div>
+            <div>Admitted to the MS in Robotics at the University of Michigan.</div>
           </div>
           <div class="news-row">
             <div class="d">Feb 2026</div>
-            <div>Graduated with a B.S. in Vehicle Engineering from National Taipei University
-              of Technology.</div>
+            <div>Graduated with a B.S. in Vehicle Engineering from NTUT.</div>
           </div>
           <div class="news-row">
             <div class="d">2025</div>
-            <div>Competed in AI CUP 2025 — cardiac CT segmentation (UNet3D) and aortic-valve
-              detection (YOLOv12).</div>
+            <div>AI CUP 2025: cardiac CT segmentation (UNet3D) and aortic-valve detection (YOLOv12).</div>
           </div>
           <div class="news-row">
             <div class="d">Jul–Aug 2024</div>
-            <div>R&amp;D intern at IPE Innotech Performance Exhaust — design, simulation, and
-              manufacturing of magnesium alloy wheels for the Porsche GT3RS.</div>
+            <div>Intern at iPE: magnesium-alloy wheels for the Porsche GT3RS.</div>
           </div>
           <div class="news-row">
             <div class="d">Sep 2023</div>
-            <div>Joined the Structural &amp; Optimization Lab at NTUT, working on scooter-frame
-              fatigue analysis and optimization.</div>
+            <div>Joined the NTUT Structural &amp; Optimization Lab for the scooter-frame fatigue project.</div>
           </div>
           <div class="news-row">
             <div class="d">Jul–Aug 2023</div>
-            <div>R&amp;D intern at Foxconn CCEV, contributing to the design of a full-electric
-              commercial van (Model N).</div>
+            <div>Intern at Foxconn CCEV: electric van Model N.</div>
           </div>
           <div class="news-row">
             <div class="d">Oct 2022</div>
-            <div>Joined Taipei Tech Racing as a chassis team member — Formula Student Taiwan
-              2023, 2nd place.</div>
+            <div>Joined Taipei Tech Racing: Formula Student Taiwan 2023, 2nd place.</div>
           </div>
           <div class="news-row">
             <div class="d">Sep 2021</div>
-            <div>Began a B.S. in Vehicle Engineering at National Taipei University of
-              Technology.</div>
+            <div>Began a B.S. in Vehicle Engineering at NTUT.</div>
           </div>
         </div>
       </details>
     </section>
 
+
     <section id="projects">
-      <h2 class="sec">Projects <span style="font-size:.8rem;font-weight:400;color:var(--text-soft)">— click to expand</span></h2>
+      <h2 class="sec">Projects <span style="font-size:.8rem;font-weight:400;color:var(--text-soft)">· click to expand</span></h2>
 
       <article class="entry open">
         <button class="entry-toggle" aria-expanded="true">
+          <div class="entry-head">
+            <h3>ROB550 Armlab: Vision-Guided Manipulation with a 6-DOF Arm</h3>
+            <span class="meta">Manipulation &amp; perception
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </div>
+          <p class="entry-summary">A Lite 6 arm that sees, grasps and stacks colored blocks. Team of 4.</p>
+        </button>
+        <div class="entry-detail">
+          <div class="entry-detail-inner"><div class="entry-detail-body">
+            <div class="metrics"><div class="metric"><div class="num">4/4</div><div class="lbl">Competition events completed</div></div><div class="metric"><div class="num">15</div><div class="lbl">Block tower</div></div><div class="metric"><div class="num">26/26</div><div class="lbl">Colors classified</div></div></div>
+            <div class="thumbs tall"><figure><video src="assets/armlab-event3.mp4" autoplay loop muted playsinline></video><figcaption>Event 3: two rainbow towers</figcaption></figure><figure><video src="assets/armlab-event4.mp4" autoplay loop muted playsinline></video><figcaption>Event 4: 15-block tower</figcaption></figure><figure><a href="assets/armlab-towers.jpg" target="_blank" rel="noopener"><img src="assets/armlab-towers.jpg" alt="Two rainbow-ordered towers built by the arm" onerror="this.parentElement.parentElement.style.display='none'"></a><figcaption>Event 3 result</figcaption></figure></div>
+            <ul>
+              <li><strong>Pipeline:</strong> AprilTag calibration, RGB-D detection, closed-form IK, Python state machine.</li>
+              <li><strong>Side-place:</strong> rotate the gripper 90 degrees and slide in sideways to clear a tall tower.</li>
+            </ul>
+            <div class="entry-links"><a href="projects/armlab.html">Full write-up →</a></div>
+          </div></div>
+        </div>
+      </article>
+      <article class="entry">
+        <button class="entry-toggle" aria-expanded="false">
           <div class="entry-head">
             <h3>Friction-Aware Motion Planning and Perception for Autonomous Vehicles</h3>
             <span class="meta">Planning, controls &amp; perception
               <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </div>
-          <p class="entry-summary">
-            Plans in a kinematic model, exposes the tire-friction tracking failure it
-            causes, fixes it with a friction-circle-constrained speed profile, then
-            estimates road friction live with an EKF — running over ROS2/RViz. A C++17/CUDA
-            perception and localization layer closes the loop from LiDAR to control in Gazebo.
-          </p>
+          <p class="entry-summary">Plans in a kinematic model, exposes the tire-friction failure, fixes it, and estimates road friction live. A C++17/CUDA perception layer closes the loop in Gazebo.</p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
             <div class="demo-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0">
               <figure class="entry-img" style="margin:0">
                 <video src="assets/fap-naive-pure-pursuit.mp4" autoplay loop muted playsinline style="width:100%;display:block;border:1px solid var(--line);border-radius:4px;aspect-ratio:16/9;object-fit:cover;background:var(--bg-soft)"></video>
-                <figcaption>Naive (curvature-blind) — spins out</figcaption>
+                <figcaption>Naive (curvature-blind): spins out</figcaption>
               </figure>
               <figure class="entry-img" style="margin:0">
                 <video src="assets/fap-friction-aware-pure-pursuit.mp4" autoplay loop muted playsinline style="width:100%;display:block;border:1px solid var(--line);border-radius:4px;aspect-ratio:16/9;object-fit:cover;background:var(--bg-soft)"></video>
-                <figcaption>Friction-aware — fixed</figcaption>
+                <figcaption>Friction-aware: fixed</figcaption>
               </figure>
             </div>
-            <div class="metrics">
-              <div class="metric"><div class="num">36/36</div><div class="lbl">Friction-aware success, vs 22/36 naive</div></div>
-              <div class="metric"><div class="num">0.004m</div><div class="lbl">Stage 2 RMSE std across 36 runs</div></div>
-            </div>
+            <div class="metrics"><div class="metric"><div class="num">36/36</div><div class="lbl">Success, vs 22/36 naive</div></div><div class="metric"><div class="num">20.4 → 0.34 m</div><div class="lbl">Worst-case tracking error</div></div><div class="metric"><div class="num">4.5x</div><div class="lbl">GPU LiDAR speedup at 1M points</div></div></div>
             <ul>
-              <li><strong>The gap it demonstrates:</strong> planner and controllers only ever reason in a kinematic model; the simulator steps a dynamic bicycle model with a friction-circle-saturated tire, so the mismatch between assumption and reality shows up as real tracking error.</li>
-              <li><strong>The fix:</strong> a friction-aware speed profile (<code>v_max = sqrt(mu·g·R)</code>) tested across Pure Pursuit, Stanley, and MPC — 36/36 success vs. naive's 22/36 over a 72-run speed×friction×controller sweep, and worst-case tracking error cut from 20.4 m to 0.34 m.</li>
-              <li><strong>Going further:</strong> Stage 2 drops the "friction is known" assumption too — an EKF estimates road friction and sideslip live from a noisy IMU and replans mid-corner as the road changes.</li>
-              <li><strong>Live, not just offline:</strong> the same stack runs as ROS2 nodes, visualized in RViz.</li>
-              <li><strong>Perception and localization:</strong> a custom C++17/CUDA voxel-grid downsampler (4.5x GPU speedup at 1M points) and RANSAC/Euclidean-clustering pipeline that removed 5 of 7 false-positive detections without losing a true one, plus a LiDAR/IMU EKF for localization (17% lower error). Run closed-loop in Gazebo, the vehicle reaches a goal 6 m away autonomously in 13.5 s.</li>
+              <li><strong>Planning:</strong> friction-circle speed profile across Pure Pursuit, Stanley and MPC; an EKF estimates friction and sideslip live.</li>
+              <li><strong>Perception:</strong> C++17/CUDA LiDAR pipeline and a LiDAR/IMU EKF; reaches the goal autonomously in 13.5 s in Gazebo.</li>
             </ul>
-            <div class="entry-links">
-              <a href="projects/friction-aware-planner.html">Full write-up →</a>
-              <a href="https://github.com/kaipowei/friction-aware-adaptive-motion-planner-ros2" target="_blank" rel="noopener">Planner code</a>
-              <a href="https://github.com/kaipowei/av-perception-localization-stack" target="_blank" rel="noopener">Perception code</a>
-            </div>
+            <div class="entry-links"><a href="projects/friction-aware-planner.html">Full write-up →</a><a href="https://github.com/kaipowei/friction-aware-adaptive-motion-planner-ros2" target="_blank" rel="noopener">Planner code</a><a href="https://github.com/kaipowei/av-perception-localization-stack" target="_blank" rel="noopener">Perception code</a></div>
           </div></div>
         </div>
       </article>
-
-      <article class="entry">
-        <button class="entry-toggle" aria-expanded="false">
-          <div class="entry-head">
-            <h3>Medical Image Segmentation &amp; Detection — AI CUP 2025</h3>
-            <span class="meta">Deep learning
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-            </span>
-          </div>
-          <p class="entry-summary">
-            Two 3D medical-imaging pipelines for cardiac CT — UNet3D whole-heart
-            segmentation and YOLOv12 aortic-valve detection.
-          </p>
-        </button>
-        <div class="entry-detail">
-          <div class="entry-detail-inner"><div class="entry-detail-body">
-            <figure class="entry-img">
-              <img src="assets/aicup-hero.png" alt="UNet3D myocardium segmentation: input CT slice next to the predicted mask" onerror="this.parentElement.style.display='none'">
-              <figcaption>Real inference: input CT slice (left) vs. UNet3D prediction (right)</figcaption>
-            </figure>
-            <div class="metrics">
-              <div class="metric"><div class="num">0.744</div><div class="lbl">Dice — UNet3D segmentation</div></div>
-              <div class="metric"><div class="num">0.940</div><div class="lbl">Dice — YOLOv12 valve detection</div></div>
-            </div>
-            <ul>
-              <li><strong>Segmentation:</strong> volumetric UNet3D on cardiac CT — preprocessing, augmentation, training, and post-processing for whole-heart masks.</li>
-              <li><strong>Detection:</strong> YOLOv12 for aortic-valve localization, tuned for small, low-contrast targets.</li>
-              <li><strong>Takeaway:</strong> end-to-end ownership of a deep-learning pipeline — the same skill set behind camera-based ADAS perception.</li>
-            </ul>
-            <div class="entry-links">
-              <a href="projects/aicup.html">Full write-up →</a>
-              <a href="https://github.com/kaipowei">Code</a>
-            </div>
-          </div></div>
-        </div>
-      </article>
-
       <article class="entry">
         <button class="entry-toggle" aria-expanded="false">
           <div class="entry-head">
@@ -419,225 +383,124 @@
               <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </div>
-          <p class="entry-summary">
-            An automated pipeline that turns daily physics news into curriculum-aligned
-            exam questions, delivered and revised entirely over chat.
-          </p>
+          <p class="entry-summary">Turns daily physics news into curriculum-aligned exam questions, delivered and revised over chat.</p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
-            <ul>
-              <li><strong>Sourcing &amp; alignment:</strong> scans physics/science news daily and maps articles to the national high-school curriculum.</li>
-              <li><strong>Generation:</strong> an LLM drafts exam-style questions with an answer key; the teacher reviews and approves every question before it reaches a student.</li>
-              <li><strong>Delivery &amp; editing:</strong> daily batches and live revisions ("make question 3 harder") happen entirely inside a chat app — no dashboard.</li>
-              <li><strong>Architecture:</strong> a scheduled job and an always-on chat listener, coordinated through shared state rather than calling each other directly; runs entirely on free-tier managed services.</li>
-            </ul>
-            <p>In daily production use since mid-2026, fully handed off to and
-            independently operated by the teacher. Source is private.</p>
+            <div class="flow"><span>Daily news</span>→<span>LLM drafts questions</span>→<span>Teacher approves</span>→<span>LINE chat</span></div>
+            <p>In daily use since mid-2026, now run independently by the teacher. Source is private.</p>
           </div></div>
         </div>
       </article>
-
-      
-
       <article class="entry">
         <button class="entry-toggle" aria-expanded="false">
           <div class="entry-head">
-            <h3>FSAE Suspension &amp; Drivetrain Design</h3>
-            <span class="meta">Taipei Tech Racing / Formula SAE
+            <h3>Cardiac CT Segmentation &amp; Detection, AI CUP 2025</h3>
+            <span class="meta">Deep learning
               <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </div>
-          <p class="entry-summary">
-            Designed drivetrain CAD &amp; suspension geometry for TTR7 race car — 2nd place, Formula Student Taiwan 2023.
-          </p>
+          <p class="entry-summary">UNet3D whole-heart segmentation and YOLOv12 aortic-valve detection.</p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
-            <div class="metrics">
-              <div class="metric"><div class="num">2nd</div><div class="lbl">Formula Student Taiwan 2023</div></div>
-              <div class="metric"><div class="num">TTR7</div><div class="lbl">Vehicle designation</div></div>
-            </div>
-
-            <figure class="entry-img">
-              <img src="assets/fsae-ttr-full.png" alt="TTR7 Formula SAE race car" onerror="this.parentElement.style.display='none'">
-              <figcaption>TTR7 — Taipei Tech Racing's Formula Student car</figcaption>
-            </figure>
-
-            <p><strong>My responsibilities:</strong></p>
+            <div class="thumbs two"><figure><a href="assets/aicup-hero.png" target="_blank" rel="noopener"><img src="assets/aicup-hero.png" alt="UNet3D segmentation: input CT slice next to the predicted mask" onerror="this.parentElement.parentElement.style.display='none'"></a><figcaption>UNet3D: input slice vs prediction</figcaption></figure><figure><a href="assets/aicup-detect-02.png" target="_blank" rel="noopener"><img src="assets/aicup-detect-02.png" alt="Raw CT slice next to the YOLOv12 aortic-valve detection" onerror="this.parentElement.parentElement.style.display='none'"></a><figcaption>YOLOv12: aortic valve, confidence 0.92</figcaption></figure></div>
+            <div class="metrics"><div class="metric"><div class="num">0.744</div><div class="lbl">Leaderboard score, UNet3D</div></div><div class="metric"><div class="num">0.940</div><div class="lbl">Evaluation score, YOLOv12</div></div></div>
             <ul>
-              <li><strong>Drivetrain CAD:</strong> designed complete drivetrain assembly from motor to wheel sprockets</li>
-              <li><strong>Power transmission:</strong> optimized chain/belt packaging, spacing, and load paths</li>
-              <li><strong>Compliance:</strong> verified all components against FSAE competition rules</li>
-              <li><strong>Simulation:</strong> FEA verification of structural strength and stiffness</li>
-              <li><strong>Result:</strong> 31% cost reduction and 16% weight savings</li>
+              <li><strong>Segmentation:</strong> MONAI 3D UNet, clipping, 128³ resampling, AdamW, Dice-CE loss.</li>
+              <li><strong>Detection:</strong> YOLOv12 on 2,700+ frames, tuned NMS IoU and confidence thresholds.</li>
             </ul>
-
-            <figure class="entry-img">
-              <img src="assets/fsae-drivetrain-new.png" alt="Drivetrain CAD design showing gears and transmission" onerror="this.parentElement.style.display='none'">
-              <figcaption>Drivetrain assembly — gearbox, sprockets, and power-transmission layout</figcaption>
-            </figure>
-
-            <figure class="entry-img">
-              <img src="assets/fsae-ttr-detail.jpg" alt="Close-up of the TTR7" onerror="this.parentElement.style.display='none'">
-              <figcaption>TTR7 close-up</figcaption>
-            </figure>
-
-            <p><strong>Team context:</strong> One year on <a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a>, the NTUT Formula Student team. Took components from CAD through machining to a running race car. Contributed to 2nd place finish at national competition.</p>
-            <p style="color:var(--text-soft);font-size:.95rem"><em>Chassis design details remain confidential under team IP agreements.</em></p>
+            <div class="entry-links"><a href="projects/aicup.html">Full write-up →</a><a href="https://github.com/kaipowei" target="_blank" rel="noopener">Code</a></div>
           </div></div>
         </div>
       </article>
-
       <article class="entry">
         <button class="entry-toggle" aria-expanded="false">
           <div class="entry-head">
             <h3>Scooter Frame Fatigue Analysis &amp; Optimization</h3>
-            <span class="meta">Capstone project / FEA
+            <span class="meta">CAE / fatigue
               <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </div>
-          <p class="entry-summary">
-            Complete fatigue workflow: experiment → CAD → FEA → optimization achieving +339% life improvement.
-          </p>
+          <p class="entry-summary">Road test to CAE to a +339% fatigue-life fix. 2nd place, department capstone competition.</p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
-            <div class="metrics">
-              <div class="metric"><div class="num">+339%</div><div class="lbl">Fatigue life gain</div></div>
-              <div class="metric"><div class="num">13.6k cycles</div><div class="lbl">vs 3.1k original</div></div>
-              <div class="metric"><div class="num">116,805 km</div><div class="lbl">Equivalent mileage, from 26,600</div></div>
-            </div>
-            <p><strong>Goal:</strong> evaluate and improve the fatigue life of a scooter frame by tying a real road test to CAE. I led a 4-person team, and the project took 2nd place in the Vehicle Engineering department's capstone competition.</p>
-
-            <figure class="entry-img">
-              <img src="assets/scooter-cad-new.png" alt="SolidWorks CAD scooter frame model" onerror="this.parentElement.style.display='none'">
-              <figcaption>Full CAD model built from motorcycle measurements (100% self-created)</figcaption>
-            </figure>
-
-            <p><strong>Methodology:</strong></p>
+            <div class="metrics"><div class="metric"><div class="num">+339%</div><div class="lbl">Fatigue life</div></div><div class="metric"><div class="num">3,093 → 13,582</div><div class="lbl">Cycles to failure</div></div><div class="metric"><div class="num">26,600 → 116,805 km</div><div class="lbl">Equivalent mileage</div></div></div>
+            <div class="thumbs"><figure><a href="assets/scooter-cad-new.png" target="_blank" rel="noopener"><img src="assets/scooter-cad-new.png" alt="SolidWorks CAD model of the scooter frame" onerror="this.parentElement.parentElement.style.display='none'"></a><figcaption>CAD model from real measurements</figcaption></figure><figure><a href="assets/scooter-life-original.png" target="_blank" rel="noopener"><img src="assets/scooter-life-original.png" alt="HyperWorks fatigue-life contour of the original frame" onerror="this.parentElement.parentElement.style.display='none'"></a><figcaption>Original: minimum life 3,093 cycles</figcaption></figure><figure><a href="assets/scooter-life-optimized.png" target="_blank" rel="noopener"><img src="assets/scooter-life-optimized.png" alt="HyperWorks fatigue-life contour of the optimized frame" onerror="this.parentElement.parentElement.style.display='none'"></a><figcaption>Tubes 2.4 → 2.7 mm: minimum life 13,582 cycles</figcaption></figure></div>
             <ul>
-              <li>Designed complete frame geometry in SolidWorks from real motorcycle specs</li>
-              <li>Set up experiment with 3 accelerometers (front, left-rear, right-rear)</li>
-              <li>Derived center-of-gravity acceleration transformation formula</li>
-              <li>Converted time-domain vibration data to PSD for HyperWorks</li>
-              <li>Validated the FEA model against road-test data through a BikeSim multibody simulation across 4 road conditions, with the rig checked against CNS 15819-5 durability regulations</li>
+              <li><strong>Method:</strong> led 4 people; multi-accelerometer rig and sensor fusion to center-of-gravity motion, PSD fatigue in HyperWorks, validated against BikeSim and road tests (4 road conditions).</li>
+              <li><strong>Fix:</strong> tube thickness 2.4 → 2.7 mm. No time for topology optimization.</li>
             </ul>
 
-            <figure class="entry-img">
-              <img src="assets/scooter-stress-original.png" alt="FEA stress analysis showing problem areas (red circles)" onerror="this.parentElement.style.display='none'">
-              <figcaption>Original design stress distribution — red circles mark critical regions, max RMS 2.14 MPa</figcaption>
-            </figure>
-
-            <figure class="entry-img">
-              <img src="assets/scooter-stress-optimized.png" alt="Optimized design with improved stress distribution" onerror="this.parentElement.style.display='none'">
-              <figcaption>After optimization — thickness 2.4 → 2.7 mm, fatigue life 3,093 → 13,582 cycles</figcaption>
-            </figure>
-
-            <figure class="entry-img">
-              <img src="assets/scooter-fea-analysis.png" alt="Detailed FEA contour plot" onerror="this.parentElement.style.display='none'">
-              <figcaption>Life prediction contour — identifies weak points for design iteration</figcaption>
-            </figure>
-
-            <p><strong>Solution &amp; Results:</strong> Increasing the tube thickness from 2.4 mm to 2.7 mm (about 12.5%) raised fatigue life from 3,093 to 13,582 cycles, +339% — roughly 26,600 km to 116,805 km, past the 100,000 km durability target. A small, manufacturable change; I did not have time for topology optimization.</p>
-            <p style="color:var(--text-soft);font-size:.95rem"><em>Key takeaway: Small design tweaks grounded in real data and FEA beats guessing.</em></p>
           </div></div>
         </div>
       </article>
-
       <article class="entry">
         <button class="entry-toggle" aria-expanded="false">
           <div class="entry-head">
-            <h3>Vehicle Dynamics Simulation</h3>
-            <span class="meta">CarSim / BikeSim
+            <h3>FSAE Drivetrain &amp; Suspension, TTR7</h3>
+            <span class="meta">Formula SAE
               <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
             </span>
           </div>
-          <p class="entry-summary">
-            Handling, stability, and maneuver simulation in CarSim and BikeSim.
-          </p>
+          <p class="entry-summary">Drivetrain CAD and suspension geometry for the Taipei Tech Racing car.</p>
         </button>
         <div class="entry-detail">
           <div class="entry-detail-inner"><div class="entry-detail-body">
-            <p>
-              Modeled and analyzed vehicle behavior in CarSim and BikeSim — handling,
-              stability, and maneuver simulation that connects mechanical design decisions to
-              on-road dynamics.
-            </p>
+            <div class="metrics"><div class="metric"><div class="num">2nd</div><div class="lbl">Formula Student Taiwan 2023</div></div><div class="metric"><div class="num">31%</div><div class="lbl">Lower cost</div></div><div class="metric"><div class="num">16%</div><div class="lbl">Less weight</div></div></div>
+            <div class="thumbs two"><figure><a href="assets/fsae-ttr7.jpg" target="_blank" rel="noopener"><img src="assets/fsae-ttr-full.png" alt="TTR7 Formula SAE race car" onerror="this.parentElement.parentElement.style.display='none'"></a><figcaption>TTR7</figcaption></figure><figure><a href="assets/fsae-drivetrain-new.png" target="_blank" rel="noopener"><img src="assets/fsae-drivetrain-new.png" alt="Drivetrain CAD showing sprockets and transmission layout" onerror="this.parentElement.parentElement.style.display='none'"></a><figcaption>Drivetrain CAD</figcaption></figure></div>
+            <ul>
+              <li>Strength checked in SolidWorks Simulation; chain and belt packaging. Chassis design is under NDA.</li>
+            </ul>
+            <div class="entry-links"><a href="https://www.ntutracing.com/" target="_blank" rel="noopener">Taipei Tech Racing</a></div>
           </div></div>
         </div>
       </article>
     </section>
+
 
     <section id="experience">
       <h2 class="sec">Experience</h2>
 
       <article class="xentry">
         <div class="entry-head">
-          <h3>Graduate Research Assistant — Mobility Transformation Lab, University of Michigan</h3>
+          <h3>Research Assistant, Mobility Transformation Lab, University of Michigan</h3>
           <span class="meta">Sep 2026 – present</span>
         </div>
-        <p>Advised by Prof. Henry Liu (Director, Mcity), working under PhD candidate Zhijie Qiao on
-        sim-to-real transfer for autonomous racing on the F1TENTH platform.</p>
+        <div class="xrow noimg"><p>Sim-to-real transfer for an F1TENTH autonomous racing platform (1/10-scale car). PI: Prof. Henry Liu.</p></div>
       </article>
 
       <article class="xentry">
         <div class="entry-head">
-          <h3>Undergraduate Student Researcher — Structural Optimization Lab, NTUT</h3>
-          <span class="meta">Sep 2023 – Sep 2024</span>
+          <h3>Intern, iPE (Wheels)</h3>
+          <span class="meta">Jul – Aug 2024</span>
         </div>
-        <p>Led a 4-person team on the scooter-frame fatigue project: designed a multi-accelerometer test rig and
-        derived a geometric sensor-fusion algorithm that converts the raw signals into center-of-gravity motion,
-        then used PSD fatigue analysis to optimize frame thickness (+339% fatigue life). 2nd place in the
-        department's capstone competition.</p>
+        <div class="xrow"><p>Magnesium-alloy wheel R&amp;D for the Porsche GT3RS. Redesigned the production workflow (+16% efficiency) and directed marketing videos (+15 to 23% traffic).</p><img src="assets/ipe-wheels-new.png" alt="Magnesium alloy wheels" onerror="this.style.display='none'"></div>
       </article>
 
       <article class="xentry">
         <div class="entry-head">
-          <h3>R&amp;D Intern — Foxconn, Commercial EV Division</h3>
-          <span class="meta">Jul–Aug 2023</span>
+          <h3>Vehicle Integration Intern, Foxconn Center of Commercial Electric Vehicles</h3>
+          <span class="meta">Jul – Aug 2023</span>
         </div>
-        <p><strong>Project:</strong> Full-electric commercial van (Model N) — cockpit design, ergonomics, and chassis layout for production-scale EV.</p>
-        <figure class="entry-img" style="max-width:500px;margin:12px 0">
-          <img src="assets/foxconn-model-n.jpg" alt="Foxconn Model N electric delivery van" onerror="this.parentElement.style.display='none'" style="max-width:100%">
-          <figcaption style="font-size:.82rem;color:var(--text-soft);margin-top:6px">Model N — Foxconn's full-electric commercial vehicle unveiled at HHTD 2023</figcaption>
-        </figure>
-        <p><strong>Contributions:</strong></p>
-        <ul style="margin-left:22px">
-          <li>Cockpit ergonomics design — 2 proposals adopted</li>
-          <li>Chassis structural layout for the van</li>
-          <li>Cross-functional coordination — worked with the ADAS, chassis, and human-factors teams on system integration</li>
-        </ul>
-        <p style="color:var(--text-soft);font-size:.95rem">Exposed me to vehicle development at production scale. Model N made its public debut at Hon Hai Tech Day 2023 (<a href="https://www.youtube.com/watch?v=zvPJuWKjSls" target="_blank" rel="noopener">video</a>).</p>
+        <div class="xrow"><p>Cockpit-ergonomics proposals for the electric van Model N (2 adopted), with the ADAS, chassis and human-factors teams. Unveiled at Hon Hai Tech Day 2023 (<a href="https://www.youtube.com/watch?v=zvPJuWKjSls" target="_blank" rel="noopener">video</a>).</p><img src="assets/foxconn-model-n.jpg" alt="Foxconn Model N electric van" onerror="this.style.display='none'"></div>
       </article>
 
       <article class="xentry">
         <div class="entry-head">
-          <h3>Product Development Intern — iPE (Wheels)</h3>
-          <span class="meta">Jul–Aug 2024</span>
+          <h3>Chassis Team Member, Taipei Tech Racing (Formula Student)</h3>
+          <span class="meta">Oct 2022 – Jul 2023</span>
         </div>
-        <p><strong>Focus:</strong> Magnesium alloy wheel R&amp;D, production optimization, and marketing for high-performance vehicles (Porsche GT3RS).</p>
-        <figure class="entry-img" style="max-width:500px;margin:12px 0">
-          <img src="assets/ipe-wheels-new.png" alt="Magnesium alloy wheel designs by iPE" onerror="this.parentElement.style.display='none'" style="max-width:100%">
-          <figcaption style="font-size:.82rem;color:var(--text-soft);margin-top:6px">Magnesium alloy wheel portfolio — lightweight, high-strength designs for motorsport</figcaption>
-        </figure>
-        <p><strong>Key achievements:</strong></p>
-        <ul style="margin-left:22px">
-          <li>Production-line workflow optimization — improved efficiency by <strong>16%</strong></li>
-          <li>Manufacturing documentation — designed structured specs and procedures for repeatability</li>
-          <li>Marketing campaigns — planned and directed product videos, achieved <strong>15–23% traffic increase</strong></li>
-          <li>Product lifecycle exposure — design → simulation → testing → manufacturing → market</li>
-        </ul>
-        <p style="color:var(--text-soft);font-size:.95rem">Learned the full product journey from concept through customer hands.</p>
+        <div class="xrow noimg"><p>Drivetrain CAD and suspension geometry for TTR7. 2nd place at Formula Student Taiwan 2023.</p></div>
       </article>
 
       <article class="xentry">
         <div class="entry-head">
           <h3>Automotive Repair Apprentice</h3>
-          <span class="meta">Apprenticeship</span>
+          <span class="meta">Jul – Aug 2022</span>
         </div>
-        <p>Hands-on diagnosis and repair — the shop-floor intuition behind everything I
-        design. I still run a small scooter-modification workshop on the side.</p>
+        <div class="xrow noimg"><p>Hands-on engine diagnosis and repair. I still run a small scooter-modification workshop on the side.</p></div>
       </article>
 
       <article class="xentry">
@@ -645,17 +508,19 @@
           <h3>Mathematics Tutor</h3>
           <span class="meta">3 years</span>
         </div>
-        <p>Long-term one-on-one tutoring; learned to break hard concepts into steps
-        people can actually follow.</p>
+        <div class="xrow noimg"><p>One-on-one tutoring: breaking hard concepts into steps people can follow.</p></div>
       </article>
     </section>
 
+
     <section id="skills">
       <h2 class="sec">Skills</h2>
-      <div class="skill-row"><div class="k">Software</div><div>Python, C++, CUDA, ROS2, Gazebo, OpenCV, PyTorch, Git</div></div>
-      <div class="skill-row"><div class="k">Simulation &amp; analysis</div><div>CarSim, BikeSim, HyperWorks (FEA, PSD fatigue), SolidWorks</div></div>
-      <div class="skill-row"><div class="k">Domains</div><div>Vehicle dynamics, motion planning (Hybrid-A*), control (Pure Pursuit, Stanley, MPC), state estimation (EKF), ADAS, suspension design</div></div>
+      <div class="skill-row"><div class="k">Programming</div><div>Python, C++, CUDA, Git, Pytest</div></div>
+      <div class="skill-row"><div class="k">Robotics / autonomy</div><div>ROS2 (rclpy, rclcpp), motion planning (Hybrid-A*, Pure Pursuit, Stanley, MPC), state estimation (EKF, ICP), kinematics (FK/IK), camera calibration (AprilTag), Gazebo, RViz, PCL</div></div>
+      <div class="skill-row"><div class="k">ML / computer vision</div><div>PyTorch, OpenCV, MONAI, Ultralytics YOLO, MATLAB, Simulink</div></div>
+      <div class="skill-row"><div class="k">Vehicle dynamics &amp; CAE</div><div>CarSim, BikeSim, tire modeling, SolidWorks, Altair HyperWorks</div></div>
     </section>
+
 
     <section id="contact">
       <h2 class="sec">Contact</h2>
